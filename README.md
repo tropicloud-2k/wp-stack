@@ -1,4 +1,4 @@
-NP-STACK
+WP-STACK
 ==============
 NGINX (v1.7.9) + PHP-FPM (v5.6.4) web stack for Docker.  
 For database connection you may read:
@@ -7,14 +7,14 @@ For database connection you may read:
 * [MariaDB](https://registry.hub.docker.com/_/mariadb/)
 
 #### Build from GitHub
-    git clone https://github.com/tropicloud/np-stack.git && cd np-stack
-    docker build -t tropicloud/np-stack .
+    git clone https://github.com/tropicloud/wp-stack.git && cd wp-stack
+    docker build -t tropicloud/wp-stack .
     
 
 or
 
 #### Pull from Docker Hub
-    docker pull tropicloud/np-stack
+    docker pull tropicloud/wp-stack
     
 
 then
@@ -22,7 +22,7 @@ then
 #### Run the Docker image
     docker run -p 80:80 -p 443:443 \
     -v /usr/share/nginx/html \
-    -d tropicloud/np-stack 
+    -d tropicloud/wp-stack 
     
 
 Navigate to `http://<docker-host-ip>/` to check the installation.
@@ -36,6 +36,6 @@ Make sure to build from GitHub or to include your own config files.
     -v $(pwd)/conf/nginx/conf.d:/etc/nginx/conf.d:ro \
     -v $(pwd)/conf/nginx/nginx.conf:/etc/nginx/nginx.conf \
     -v $(pwd)/conf/php/php-fpm.conf:/etc/php-fpm.d/www.conf \
-    -d tropicloud/np-stack
+    -d tropicloud/wp-stack
     
    
