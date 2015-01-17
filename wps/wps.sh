@@ -8,10 +8,16 @@
 # ------------------------
 
 # load environment
-source /usr/local/wps/wps-config.sh
+. /usr/local/wps/wps-env.sh
 
 # load functions
 for f in /usr/local/wps/func/*; do . $f; done
+
+echo "DB_HOST: $DB_HOST"
+echo "DB_PORT: $DB_PORT"
+echo "DB_NAME: $DB_NAME"
+echo "DB_USER: $DB_USER"
+echo "DB_PASS: $DB_PASS"
 
 # ------------------------
 # WP-STACK Functions
