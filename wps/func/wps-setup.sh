@@ -76,13 +76,7 @@ function wps_setup() {
 	mkdir -p /app/wordpress
 	
 	wp --allow-root core download
-	wp --allow-root core config --dbname=${DB_NAME} --dbhost=${DB_HOST} --dbuser=${DB_USER} --dbpass=${DB_PASS} --extra-php <<PHP
-define('WPCACHEHOME', 'SITEROOT/wp/wp-content/plugins/wp-super-cache/');
-define('DISALLOW_FILE_EDIT', true);
-//define('FORCE_SSL_LOGIN', true);
-//define('FORCE_SSL_ADMIN', true);
-define('WP_CACHE', true);
-PHP
+	cat /usr/local/wps/conf/wordpress/wp-config.php > /app/wp-config.php
 
 # 	wp --allow-root core install --url=${WP_URL} --title=${DOMAIN} --admin_name=${ADM_USER} --admin_email=${ADM_MAIL} --admin_password=${ADM_PASS}
 
