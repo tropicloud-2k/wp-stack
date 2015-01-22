@@ -7,12 +7,6 @@
 # version: 0.1
 # ------------------------
 
-# DB_HOST=$( echo $DATABASE_URL | grep -o @.* | cut -d: -f1 | cut -d@ -f2 )
-# DB_PORT=$( echo $DATABASE_URL | grep -o @.* | cut -d: -f2 | cut -d/ -f1 )
-# DB_NAME=$( echo $DATABASE_URL | grep -o @.* | cut -d/ -f2 )
-# DB_USER=$( echo $DATABASE_URL | cut -d: -f2 | sed 's|//||g' )
-# DB_PASS=$( echo $DATABASE_URL | cut -d: -f3 | cut -d@ -f1 )
-
 # load functions
 for f in /usr/local/wps/func/*; do . $f; done
 
@@ -20,9 +14,10 @@ for f in /usr/local/wps/func/*; do . $f; done
 # WP-STACK Functions
 # ------------------------
 
-  if [[  ${1} == 'setup'  ]];	then wps_setup
+  if [[  ${1} == 'build'  ]];	then wps_build
+elif [[  ${1} == 'setup'  ]];	then wps_setup
 elif [[  ${1} == 'start'  ]];	then wps_start
-elif [[  ${1} == 'stop'  ]];	then wps_stop
+elif [[  ${1} == 'stop'   ]];	then wps_stop
 
 # ------------------------
 # WP-STACK Commands
