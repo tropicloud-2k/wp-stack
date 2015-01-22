@@ -14,10 +14,9 @@ for f in /usr/local/wps/func/*; do . $f; done
 # WP-STACK Functions
 # ------------------------
 
-  if [[  ${1} == 'build'  ]];	then wps_build
-elif [[  ${1} == 'setup'  ]];	then wps_setup
-elif [[  ${1} == 'start'  ]];	then wps_start
-elif [[  ${1} == 'stop'   ]];	then wps_stop
+  if [[  ${1} == 'setup'  ]]; then wps_setup
+elif [[  ${1} == 'start'  ]]; then wps_start
+elif [[  ${1} == 'stop'   ]]; then wps_stop
 
 # ------------------------
 # WP-STACK Commands
