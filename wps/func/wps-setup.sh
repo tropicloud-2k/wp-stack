@@ -4,8 +4,7 @@
 
 function wps_setup() {
 	
-	
-	mkdir -p /app/wordpress
+	mkdir -p /app/wordpress/env
 	cd /app/wordpress
 	
 	wp --allow-root core download	
