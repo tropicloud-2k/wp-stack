@@ -11,13 +11,13 @@ define('LOGGED_IN_SALT',   'mcb3 s46r&)r@uBMXjLS#:*BMO[WZr8I|w+}2{%~uR|uw|veuijk
 define('NONCE_SALT',       '^LKVxF%v.P1O8Ru{TCNx>_2~=(tTeu3pn`&;_Yk@jG-WI{_0K;H :!Oh}!PV z1z');
 
 // ** MySQL DB ** //
-$database_url = parse_url($_SERVER["DATABASE_URL"]);
+$database_url = parse_url($_ENV['DATABASE_URL']);
 $table_prefix = 'wp_';
 
-define('DB_NAME', trim($database_url["path"],"/"));
-define('DB_USER', $database_url["user"]);
-define('DB_PASSWORD', $database_url["pass"]);
-define('DB_HOST', $database_url["host"].":".$database_url["port"]);
+define('DB_NAME', trim($database_url['path'],'/'));
+define('DB_USER', $database_url['user']);
+define('DB_PASSWORD', $database_url['pass']);
+define('DB_HOST', $database_url['host'].':'.$database_url['port']);
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
 
