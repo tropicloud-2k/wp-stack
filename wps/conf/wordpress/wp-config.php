@@ -6,7 +6,8 @@ $db = parse_url($_ENV["DATABASE_URL"]);
 define('DB_NAME', trim($db["path"],"/"));
 define('DB_USER', $db["user"]);
 define('DB_PASSWORD', $db["pass"]);
-define('DB_HOST', $db["host"].":".$db["port"]);  // <---- add .":".$db["port"]
+//define('DB_HOST', $db["host"].":".$db["port"]);  // <---- add .":".$db["port"]
+define('DB_HOST', getenv('MARIADB_PORT_3306_TCP_ADDR').":".getenv('MARIADB_PORT_3306_TCP_PORT'));
 
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
@@ -37,3 +38,5 @@ if ( !defined('ABSPATH') )
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
+
+MARIADB_PORT_3306_TCP_ADDR
