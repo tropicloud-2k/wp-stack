@@ -10,8 +10,8 @@ define('SECURE_AUTH_SALT', 'I(c#a2+%#c1t~KT]CgWTD$X^YEOP9S@*V O]is$8R^QF~8Kc|!a!
 define('LOGGED_IN_SALT',   'mcb3 s46r&)r@uBMXjLS#:*BMO[WZr8I|w+}2{%~uR|uw|veuijkq.8zaoCfj#j_');
 define('NONCE_SALT',       '^LKVxF%v.P1O8Ru{TCNx>_2~=(tTeu3pn`&;_Yk@jG-WI{_0K;H :!Oh}!PV z1z');
 
-// ** MySQL DB ** //
-$database_url = parse_url(exec('cat /etc/wps/env/DATABASE_URL'));
+// ** MariaDB ** //
+$database_url = parse_url(exec('cat /etc/wps/env/database_url'));
 $table_prefix = 'wp_';
 
 define('DB_NAME', trim($database_url['path'],'/'));
@@ -21,7 +21,7 @@ define('DB_HOST', $database_url['host'].':'.$database_url['port']);
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
 
-// ** WP Super Cache ** //
+// ** WP Cache ** //
 define('WPCACHEHOME', '/app/wordpress/wp-content/plugins/wp-super-cache/');
 define('WP_CACHE', true);
 
@@ -29,6 +29,7 @@ define('WP_CACHE', true);
 define('FORCE_SSL_LOGIN', true);
 define('FORCE_SSL_ADMIN', true);
 define('DISALLOW_FILE_EDIT', true);
+
 
 
 /* That's all, stop editing! Happy blogging. */
