@@ -20,6 +20,14 @@ function wps_start() {
 		cd /app/wordpress
 		
 		wp --allow-root core download
+		
+		if [ ! $? -eq 0 ]; then 
+			wget https://wordpress.org/latest.zip
+			unzip *.zip && rm -f *.zip
+			mv wordpress/* $(pwd)
+			rm -rf wordpress
+		fi
+		
 		cat /usr/local/wps/conf/wordpress/wp-config.php > /app/wp-config.php
 		cat /usr/local/wps/conf/wordpress/db.php > /app/wordpress/db.php
 	
