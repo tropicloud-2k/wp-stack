@@ -54,7 +54,7 @@ function wps_setup() {
 	# ------------------------
 
 	cat /usr/local/wps/conf/nginx/nginx.conf > /etc/nginx/nginx.conf
-	cat /usr/local/wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/wordpress.conf
+	cat /usr/local/wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
 	cat /usr/local/wps/conf/php/php-fpm.conf > /etc/php-fpm.d/www.conf
 	cat /usr/local/wps/conf/supervisor/supervisord.conf > /etc/supervisord.conf
 	
