@@ -1,14 +1,14 @@
 <?php
 
 // ** WP Keys ** //
-define('AUTH_KEY',         '&<CF0(WcE%2mF7/o(_kT9mA{++ %P-k&=][UuEZ^~>/O<sl>.TM0>sL]>cuduaBe');
-define('SECURE_AUTH_KEY',  '/sD43~)mf/!SlKzbpnZA,R/r|mb/ep}^%&SlqS3#JEo-//+8)}4eOr[pPP4wPQrx');
-define('LOGGED_IN_KEY',    'Y--;AdM];6k`i}92+*|hW_F5YG|#S|Ta|3C,N9&@j@DsA>a{:y=(_0_B?0n{OQbw');
-define('NONCE_KEY',        '=Q|PlQ2cGSDrd5SE*uzq4$3)_d#yyTU7gvenyox4>6kSli!zXWg=XLV|WXT1v9.|');
-define('AUTH_SALT',        'R(vmIz`-li2QKZ_gdYDJ@Kj $e#-x9=oSB)c:r[N8cVrx|w~ZOAw|62{B%fV;}4H');
-define('SECURE_AUTH_SALT', 'I(c#a2+%#c1t~KT]CgWTD$X^YEOP9S@*V O]is$8R^QF~8Kc|!a!|Ngj!Ftx#b$r');
-define('LOGGED_IN_SALT',   'mcb3 s46r&)r@uBMXjLS#:*BMO[WZr8I|w+}2{%~uR|uw|veuijkq.8zaoCfj#j_');
-define('NONCE_SALT',       '^LKVxF%v.P1O8Ru{TCNx>_2~=(tTeu3pn`&;_Yk@jG-WI{_0K;H :!Oh}!PV z1z');
+define('AUTH_KEY',         'unique phrase here');
+define('SECURE_AUTH_KEY',  'unique phrase here');
+define('LOGGED_IN_KEY',    'unique phrase here');
+define('NONCE_KEY',        'unique phrase here');
+define('AUTH_SALT',        'unique phrase here');
+define('SECURE_AUTH_SALT', 'unique phrase here');
+define('LOGGED_IN_SALT',   'unique phrase here');
+define('NONCE_SALT',       'unique phrase here');
 
 // ** MariaDB ** //
 $database_url = parse_url(exec('cat /etc/wps/env/database_url'));
