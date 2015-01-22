@@ -19,11 +19,15 @@ DB_PASS=$( echo $DATABASE_URL | cut -d: -f3 | cut -d@ -f1 )
 # load functions
 for f in /usr/local/wps/func/*; do . $f; done
 
+echo "------------------------"
+echo "DATABASE_URL: $DATABASE_URL"
+echo ""
 echo "DB_HOST: $DB_HOST"
 echo "DB_PORT: $DB_PORT"
 echo "DB_NAME: $DB_NAME"
 echo "DB_USER: $DB_USER"
 echo "DB_PASS: $DB_PASS"
+echo "------------------------"
 
 # ------------------------
 # WP-STACK Functions
