@@ -73,25 +73,4 @@ function wps_setup() {
 	openssl rsa -in localhost.key -out localhost.key
 	openssl x509 -req -days 365 -in localhost.csr -signkey localhost.key -out localhost.crt
 
-	# ------------------------
-	# WORDPRESS
-	# ------------------------
-	
-	if [[  ! -d '/etc/wps/env'  ]]; then
-		mkdir -p /etc/wps/env
-		env | grep 'DATABASE_URL'.* | cut -d= -f2 > /etc/wps/env/DATABASE_URL
-	fi
-	
-	mkdir -p /app/wordpress
-	cd /app/wordpress
-	
-	wp --allow-root core download	
-	cat /usr/local/wps/conf/wordpress/wp-config.php > /app/wp-config.php
-	cat /usr/local/wps/conf/wordpress/db.php > /app/wordpress/db.php
-
- 	chown -R nginx:nginx /app/wordpress
- 	chown -R nginx:nginx /app/wp-config.php
- 	chmod -R 755 /app/wordpress
- 	chmod -R 755 /app/wp-config.php
-
 }
