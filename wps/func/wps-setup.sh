@@ -1,5 +1,5 @@
 # ------------------------
-# WORDPRESS INSTALL
+# WPS SETUP
 # ------------------------
 
 function wps_setup() {

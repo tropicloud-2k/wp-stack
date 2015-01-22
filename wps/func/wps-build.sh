@@ -1,3 +1,7 @@
+# ------------------------
+# WPS BUILD
+# ------------------------
+
 function wps_build() {
 
 	# ------------------------
@@ -21,7 +25,7 @@ function wps_build() {
 	yum install -y nano wget zip python-setuptools
 
 	## NGINX + MariaDB Client
-	yum install -y nginx mariadb 
+	yum install -y nginx mariadb
 	               
 	## PHP
 	yum install -y --enablerepo=remi,remi-php56 \
