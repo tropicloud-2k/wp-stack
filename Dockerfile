@@ -6,4 +6,4 @@ RUN chmod u+x /usr/local/wps/wps.sh && ln -s /usr/local/wps/wps.sh /usr/bin/wps
 RUN wps setup
 
 EXPOSE 80 443
-CMD ["wps start"]
+CMD ["/usr/local/wps","start"]
