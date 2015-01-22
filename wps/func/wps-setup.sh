@@ -83,4 +83,5 @@ function wps_setup() {
 # 	chown -R nginx:nginx /app/wp-config.php
 # 	chmod -R 755 /app/wordpress
 # 	chmod -R 755 /app/wp-config.php
+
 }
