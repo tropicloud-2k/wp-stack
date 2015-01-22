@@ -11,7 +11,7 @@ define('LOGGED_IN_SALT',   'mcb3 s46r&)r@uBMXjLS#:*BMO[WZr8I|w+}2{%~uR|uw|veuijk
 define('NONCE_SALT',       '^LKVxF%v.P1O8Ru{TCNx>_2~=(tTeu3pn`&;_Yk@jG-WI{_0K;H :!Oh}!PV z1z');
 
 // ** MySQL DB ** //
-$database_url = parse_url($_ENV['DATABASE_URL']);
+$database_url = parse_url(exec('cat /app/env/database_url'));
 $table_prefix = 'wp_';
 
 define('DB_NAME', trim($database_url['path'],'/'));

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-env > /etc/env
-env | grep 'DATABASE_URL'.* | cut -d= -f2 > /app/.dbatabase_url
+env | grep 'DATABASE_URL'.* | cut -d= -f2 > /app/env/database_url
 
 if [[  ! -f '/app/wp-config.php'  ]]; then wps wordpress; fi
 if [[  ! -f '/var/log/nginx.log'  ]]; then touch /var/log/nginx.log; fi
