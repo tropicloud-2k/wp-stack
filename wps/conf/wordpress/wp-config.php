@@ -10,21 +10,21 @@ define('SECURE_AUTH_SALT', 'I(c#a2+%#c1t~KT]CgWTD$X^YEOP9S@*V O]is$8R^QF~8Kc|!a!
 define('LOGGED_IN_SALT',   'mcb3 s46r&)r@uBMXjLS#:*BMO[WZr8I|w+}2{%~uR|uw|veuijkq.8zaoCfj#j_');
 define('NONCE_SALT',       '^LKVxF%v.P1O8Ru{TCNx>_2~=(tTeu3pn`&;_Yk@jG-WI{_0K;H :!Oh}!PV z1z');
 
-// ** MariaDB ** //
-$db = parse_url($_ENV["DATABASE_URL"]);
-define('DB_NAME', trim($db["path"],"/"));
-define('DB_USER', $db["user"]);
-define('DB_PASSWORD', $db["pass"]);
-define('DB_HOST', $db["host"].":".$db["port"]);  // <---- add .":".$db["port"]
-//define('DB_HOST', getenv('MARIADB_PORT_3306_TCP_ADDR').":".getenv('MARIADB_PORT_3306_TCP_PORT'));
-define('DB_CHARSET', 'utf8');
-define('DB_COLLATE', '');
+// ** MySQL DB ** //
+$database_url = parse_url($_SERVER["DATABASE_URL"]);
 $table_prefix = 'wp_';
 
-// ** WP Super Cache ** //
-define('WPCACHEHOME',      '/app/wordpress/wp-content/plugins/wp-super-cache/'               );
-define('WP_CACHE', true);
+define('DB_NAME', trim($database_url["path"],"/"));
+define('DB_USER', $database_url["user"]);
+define('DB_PASSWORD', $database_url["pass"]);
+define('DB_HOST', $database_url["host"].":".$database_url["port"]);
+define('DB_CHARSET', 'utf8');
+define('DB_COLLATE', '');
 
+
+// ** WP Super Cache ** //
+define('WPCACHEHOME', '/app/wordpress/wp-content/plugins/wp-super-cache/');
+define('WP_CACHE', true);
 
 // ** WP SSL ** //
 define('FORCE_SSL_LOGIN', true);
