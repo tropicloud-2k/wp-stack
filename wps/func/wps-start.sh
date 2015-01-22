@@ -23,8 +23,8 @@ function wps_start() {
 		cat /usr/local/wps/conf/wordpress/wp-config.php > /app/wp-config.php
 		cat /usr/local/wps/conf/wordpress/db.php > /app/wordpress/db.php
 	
-	 	chown -R nginx:nginx /app/wordpress && chmod -R 755 /app/wordpress
-	 	chown -R nginx:nginx /app/wp-config.php && chmod -R 755 /app/wp-config.php
+# 	 	chown -R nginx:nginx /app/wordpress && chmod -R 755 /app/wordpress
+# 	 	chown -R nginx:nginx /app/wp-config.php && chmod -R 755 /app/wp-config.php
 	 	
 	fi
 	
