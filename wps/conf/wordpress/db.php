@@ -1,8 +1,7 @@
 <?php
 
-$db = parse_url($_SERVER["DATABASE_URL"]);
-
-print_r(parse_url($db));
-echo parse_url($db, PHP_URL_PATH);
+$database_url = exec('cat /app/env/database_url');
+print_r(parse_url($database_url));
+echo parse_url($database_url, PHP_URL_PATH);
 
 ?>
