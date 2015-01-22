@@ -7,27 +7,11 @@
 # version: 0.1
 # ------------------------
 
-DB_HOST=$( echo $DATABASE_URL | grep -o @.* | cut -d: -f1 | cut -d@ -f2 )
-DB_PORT=$( echo $DATABASE_URL | grep -o @.* | cut -d: -f2 | cut -d/ -f1 )
-DB_NAME=$( echo $DATABASE_URL | grep -o @.* | cut -d/ -f2 )
-DB_USER=$( echo $DATABASE_URL | cut -d: -f2 | sed 's|//||g' )
-DB_PASS=$( echo $DATABASE_URL | cut -d: -f3 | cut -d@ -f1 )
-
 # load environment
-# . /usr/local/wps/wps-env.sh
+. /usr/local/wps/wps-env.sh
 
 # load functions
 for f in /usr/local/wps/func/*; do . $f; done
-
-echo "------------------------"
-echo "DATABASE_URL: $DATABASE_URL"
-echo ""
-echo "DB_HOST: $DB_HOST"
-echo "DB_PORT: $DB_PORT"
-echo "DB_NAME: $DB_NAME"
-echo "DB_USER: $DB_USER"
-echo "DB_PASS: $DB_PASS"
-echo "------------------------"
 
 # ------------------------
 # WP-STACK Functions

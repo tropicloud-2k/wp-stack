@@ -74,8 +74,10 @@ function wps_setup() {
 	# ------------------------
 	
 	mkdir -p /app/wordpress
+	cd /app/wordpress
 	
 	wp --allow-root core download
+	
 	cat /usr/local/wps/conf/wordpress/wp-config.php > /app/wp-config.php
 
 # 	wp --allow-root core install --url=${WP_URL} --title=${DOMAIN} --admin_name=${ADM_USER} --admin_email=${ADM_MAIL} --admin_password=${ADM_PASS}
