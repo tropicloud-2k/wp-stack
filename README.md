@@ -46,23 +46,25 @@ ln -s /usr ~/
 ln -s /var ~/
 ln -s /etc ~/
 
-app="wpstack"
-
-dokku create $app
-dokku mariadb:create $app
-dokku mariadb:link $app $app
-dokku config:set $app DOKKU_ENABLE_HTTP_HOST=1
-dokku config $app
-
-ssl="/home/dokku/${app}/ssl"
-
+ssl="/var/ssl"
 mkdir -p $ssl
 
 curl -s https://raw.githubusercontent.com/tropicloud/np-stack/master/conf/nginx/openssl.conf | sed "s/localhost/*.cloudapp.ml/g" > $ssl/openssl.conf
 openssl req -nodes -sha256 -newkey rsa:2048 -keyout $ssl/server.key -out $ssl/server.csr -config $ssl/openssl.conf -batch
 openssl rsa -in $ssl/server.key -out $ssl/server.key
 openssl x509 -req -days 365 -in $ssl/server.csr -signkey $ssl/server.key -out $ssl/server.crt
-chown -R dokku:dokku $ssl && rm -f $ssl/openssl.conf
+
+---
+
+app="wpstack"
+
+dokku create $app
+dokku mariadb:create $app
+dokku mariadb:link $app $app
+dokku config $app
+
+cat $ssl/server.crt | dokku ssl:certificate $app
+cat $ssl/server.key | dokku ssl:key $app
 
 ---
 

@@ -14,7 +14,7 @@ function wps_start() {
 		# ------------------------
 		
 		mkdir -p /etc/wps/env
-		env | grep 'DATABASE_URL'.* | cut -d= -f2 > /etc/wps/env/database_url
+		env | grep 'DATABASE_URL'.* | cut -d= -f2 > /etc/wps/env/DATABASE_URL
 		
 		mkdir -p /app/wordpress
 		cd /app/wordpress
