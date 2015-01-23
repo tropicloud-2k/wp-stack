@@ -58,19 +58,23 @@ function wps_setup() {
 	# ------------------------
 
 	cat /usr/local/wps/conf/nginx/nginx.conf > /etc/nginx/nginx.conf
-	cat /usr/local/wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
+	cat /usr/local/wps/conf/nginx/wp.conf > /etc/nginx/conf.d/default.conf
 	cat /usr/local/wps/conf/php/php-fpm.conf > /etc/php-fpm.d/www.conf
 	cat /usr/local/wps/conf/supervisor/supervisord.conf > /etc/supervisord.conf
+	
+	mkdir -p /app/backup
+	mkdir -p /app/public
+	mkdir -p /app/log
+	mkdir -p /app/ssl
 	
 	# ------------------------
 	# OPENSSL
 	# ------------------------
 	
-	mkdir -p /app/ssl
 	cd /app/ssl
 	
-	openssl req -nodes -sha256 -newkey rsa:2048 -keyout localhost.key -out localhost.csr -config /usr/local/wps/conf/nginx/openssl.conf -batch
-	openssl rsa -in localhost.key -out localhost.key
-	openssl x509 -req -days 365 -in localhost.csr -signkey localhost.key -out localhost.crt
+	openssl req -nodes -sha256 -newkey rsa:2048 -keyout app.key -out app.csr -config /usr/local/wps/conf/nginx/openssl.conf -batch
+	openssl rsa -in app.key -out app.key
+	openssl x509 -req -days 365 -in app.csr -signkey app.key -out app.crt
 
 }
