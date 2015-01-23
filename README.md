@@ -41,19 +41,12 @@ Make sure to build from GitHub or to include your own config files.
    
 #### Dokku
 
+ln -s /home/dokku ~/
 ln -s /usr ~/
 ln -s /var ~/
 ln -s /etc ~/
-ln -s /home/dokku ~/
 
-mkdir ~/ssl && cd ~/ssl
-
-curl -s https://raw.githubusercontent.com/tropicloud/np-stack/master/conf/nginx/openssl.conf > openssl.conf
-openssl req -nodes -sha256 -newkey rsa:2048 -keyout server.key -out server.csr -config openssl.conf -batch
-openssl rsa -in server.key -out server.key
-openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
-
-app='wpstack'
+app="wpstack"
 
 dokku create $app
 dokku mariadb:create $app
@@ -61,4 +54,12 @@ dokku mariadb:link $app $app
 dokku config:set $app DOKKU_ENABLE_HTTP_HOST=1
 dokku config $app
 
-cp -R ~/ssl /home/dokku/${app}/ssl
+ssl="/home/dokku/${app}/ssl"
+
+mkdir -p $ssl
+
+curl -s https://raw.githubusercontent.com/tropicloud/np-stack/master/conf/nginx/openssl.conf | sed "s/localhost/$app.cloudapp.ml/g" > $ssl/openssl.conf
+openssl req -nodes -sha256 -newkey rsa:2048 -keyout $ssl/server.key -out $ssl/server.csr -config $ssl/openssl.conf -batch
+openssl rsa -in $ssl/server.key -out $ssl/server.key
+openssl x509 -req -days 365 -in $ssl/server.csr -signkey $ssl/server.key -out $ssl/server.crt
+rm -f $ssl/openssl.conf
