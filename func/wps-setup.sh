@@ -69,7 +69,6 @@ function wps_setup() {
 	
 	cat $WPS/conf/nginx/nginx.conf > /etc/nginx/nginx.conf
 	cat $WPS/conf/php/php-fpm.conf > /etc/php-fpm.d/www.conf
-	cat $WPS/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
 	cat $WPS/conf/supervisor/supervisord.conf > /etc/supervisord.conf
 	
 }
