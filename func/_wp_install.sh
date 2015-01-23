@@ -22,12 +22,12 @@ function wps_wp_install() {
 	cat $WPS/conf/wordpress/wp-config.php > /app/wp-config.php
 	cat $WPS/conf/wordpress/db.php > /app/wordpress/db.php
 	
-# 	wp --allow-root core install \
-# 	   --title=WP-STACK \
-# 	   --url=http://$WP_URL \
-# 	   --admin_name=$WP_USER \
-# 	   --admin_email=$WP_MAIL \
-# 	   --admin_password=$WP_PASS 
+ 	wp --allow-root core install \
+ 	   --title=WP-STACK \
+ 	   --url=http://$WP_URL \
+ 	   --admin_name=$WP_USER \
+ 	   --admin_email=$WP_MAIL \
+ 	   --admin_password=$WP_PASS 
 		
 	## SSL CERT.
 	mkdir -p /app/ssl
