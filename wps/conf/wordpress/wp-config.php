@@ -26,8 +26,8 @@ define('WPCACHEHOME', '/app/wordpress/wp-content/plugins/wp-super-cache/');
 define('WP_CACHE', true);
 
 // ** WP SSL ** //
-define('FORCE_SSL_LOGIN', true);
-define('FORCE_SSL_ADMIN', true);
+//define('FORCE_SSL_LOGIN', true);
+//define('FORCE_SSL_ADMIN', true);
 define('DISALLOW_FILE_EDIT', true);
 
 
