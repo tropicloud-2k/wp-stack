@@ -19,8 +19,8 @@ function wps_wp_install() {
 	rm -rf wordpress
 	fi
 	
-# 	cat $WPS/conf/nginx/wordpress.conf | sed "s|localhost|$WP_URL|g" > /etc/nginx/conf.d/default.conf
-	cat $WPS/conf/nginx/wp.conf > /etc/nginx/conf.d/default.conf
+# 	cat $WPS/conf/nginx/wp.conf > /etc/nginx/conf.d/default.conf
+	cat $WPS/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
 	cat $WPS/conf/wordpress/wp-config.php > /app/wp-config.php
 	
  	wp --allow-root core install \
