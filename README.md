@@ -8,9 +8,7 @@ WordPress stack for Docker.
 
 
 #### Install Dokku-alt
-
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/dokku-alt/dokku-alt/master/bootstrap.sh)" < /dev/null
-    
+   
     ln -s /home/dokku ~/
     ln -s /usr ~/
     ln -s /var ~/
@@ -18,11 +16,15 @@ WordPress stack for Docker.
     
     ssl="/var/ssl"
     mkdir -p $ssl
-
-    curl -s https://raw.githubusercontent.com/tropicloud/np-stack/master/conf/nginx/openssl.conf | sed "s/localhost/*.cloudapp.ml/g" > $ssl/openssl.conf
+    
+    curl -s https://raw.githubusercontent.com/tropicloud/np-stack/master/conf/nginx/openssl.conf \
+    | sed "s/localhost/*.cloudapp.ml/g" > $ssl/openssl.conf
+    
     openssl req -nodes -sha256 -newkey rsa:2048 -keyout $ssl/server.key -out $ssl/server.csr -config $ssl/openssl.conf -batch
     openssl rsa -in $ssl/server.key -out $ssl/server.key
     openssl x509 -req -days 365 -in $ssl/server.csr -signkey $ssl/server.key -out $ssl/server.crt
+    
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/dokku-alt/dokku-alt/master/bootstrap.sh)" < /dev/null
 
 
 #### Deplay App
@@ -39,7 +41,7 @@ WordPress stack for Docker.
     dokku config $app
 
 
-#### Deplay App
+#### Delete App
 
     dokku delete $app && dokku mariadb:delete $app
 
