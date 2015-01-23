@@ -57,15 +57,15 @@ function wps_setup() {
 	# CONFIG
 	# ------------------------
 
+	mkdir -p /app/backup
+	mkdir -p /app/logs
+	mkdir -p /app/html
+	mkdir -p /app/ssl
+	
 	cat /usr/local/wps/conf/nginx/nginx.conf > /etc/nginx/nginx.conf
 	cat /usr/local/wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
 	cat /usr/local/wps/conf/php/php-fpm.conf > /etc/php-fpm.d/www.conf
 	cat /usr/local/wps/conf/supervisor/supervisord.conf > /etc/supervisord.conf
-	
-	mkdir -p /app/backup
-	mkdir -p /app/public
-	mkdir -p /app/log
-	mkdir -p /app/ssl
 	
 	# ------------------------
 	# OPENSSL
