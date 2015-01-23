@@ -53,6 +53,11 @@ function wps_setup() {
 	wget -O /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 	chmod +x /usr/local/bin/wp
 	
+	## JQ 
+	wget -O /usr/local/bin/jq http://stedolan.github.io/jq/download/linux64/jq
+	chmod +x /usr/local/bin/jq
+	
+	
 	# ------------------------
 	# CONFIG
 	# ------------------------

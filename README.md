@@ -1,76 +1,45 @@
 WP-STACK
 ==============
-NGINX (v1.7.9) + PHP-FPM (v5.6.4) web stack for Docker.  
-For database connection you may read:
+WordPress stack for Docker.  
 
-* [Container Linking](https://docs.docker.com/userguide/dockerlinks/#docker-container-linking)
-* [MariaDB](https://registry.hub.docker.com/_/mariadb/)
+* [NGINX 1.7.9](http://nginx.com)
+* [PHP-FPM 5.6.4](http://php.net)
+* [CentOS 7](http://www.centos.org)
 
-#### Build from GitHub
-    git clone https://github.com/tropicloud/wp-stack.git && cd wp-stack
-    docker build -t tropicloud/wp-stack .
+
+#### Install Dokku-alt
+
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/dokku-alt/dokku-alt/master/bootstrap.sh)" < /dev/null
     
-
-or
-
-#### Pull from Docker Hub
-    docker pull tropicloud/wp-stack
+    ln -s /home/dokku ~/
+    ln -s /usr ~/
+    ln -s /var ~/
+    ln -s /etc ~/
     
+    ssl="/var/ssl"
+    mkdir -p $ssl
 
-then
+    curl -s https://raw.githubusercontent.com/tropicloud/np-stack/master/conf/nginx/openssl.conf | sed "s/localhost/*.cloudapp.ml/g" > $ssl/openssl.conf
+    openssl req -nodes -sha256 -newkey rsa:2048 -keyout $ssl/server.key -out $ssl/server.csr -config $ssl/openssl.conf -batch
+    openssl rsa -in $ssl/server.key -out $ssl/server.key
+    openssl x509 -req -days 365 -in $ssl/server.csr -signkey $ssl/server.key -out $ssl/server.crt
 
-#### Run the Docker image
-    docker run -p 80:80 -p 443:443 \
-    -v /usr/share/nginx/html \
-    -d tropicloud/wp-stack 
+
+#### Deplay App
+
+    app="wpstack"
     
-
-Navigate to `http://<docker-host-ip>/` to check the installation.
-
-#### Example Configuration
-Make sure to build from GitHub or to include your own config files.
-
-    docker run -p 80:80 -p 443:443 \
-    -v /usr/share/nginx/html \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v $(pwd)/conf/nginx/conf.d:/etc/nginx/conf.d:ro \
-    -v $(pwd)/conf/nginx/nginx.conf:/etc/nginx/nginx.conf \
-    -v $(pwd)/conf/php/php-fpm.conf:/etc/php-fpm.d/www.conf \
-    -d tropicloud/wp-stack
+    dokku create $app
+    dokku mariadb:create $app
+    dokku mariadb:link $app $app
+    dokku config:set $app DOKKU_ENABLE_HSTS=1
+    dokku config:set WP_USER=guigo2k WP_PASS=2532xd9f WP_MAIL=guigo2k@guigo2k.com
     
-   
-#### Dokku
+    cat $ssl/server.crt | dokku ssl:certificate $app
+    cat $ssl/server.key | dokku ssl:key $app
 
-ln -s /home/dokku ~/
-ln -s /usr ~/
-ln -s /var ~/
-ln -s /etc ~/
 
-ssl="/var/ssl"
-mkdir -p $ssl
+#### Deplay App
 
-curl -s https://raw.githubusercontent.com/tropicloud/np-stack/master/conf/nginx/openssl.conf | sed "s/localhost/*.cloudapp.ml/g" > $ssl/openssl.conf
-openssl req -nodes -sha256 -newkey rsa:2048 -keyout $ssl/server.key -out $ssl/server.csr -config $ssl/openssl.conf -batch
-openssl rsa -in $ssl/server.key -out $ssl/server.key
-openssl x509 -req -days 365 -in $ssl/server.csr -signkey $ssl/server.key -out $ssl/server.crt
-
----
-
-app="wpstack"
-
-dokku create $app
-dokku mariadb:create $app
-dokku mariadb:link $app $app
-dokku config $app
-
-cat $ssl/server.crt | dokku ssl:certificate $app
-cat $ssl/server.key | dokku ssl:key $app
-
----
-
-cat ~/app.conf | sed "s/app/$app/g" > /home/dokku/${app}/nginx.conf.template
-
----
-
-dokku delete $app && dokku mariadb:delete $app
+    dokku delete $app && dokku mariadb:delete $app
 
