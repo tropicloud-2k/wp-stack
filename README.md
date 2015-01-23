@@ -58,8 +58,17 @@ ssl="/home/dokku/${app}/ssl"
 
 mkdir -p $ssl
 
-curl -s https://raw.githubusercontent.com/tropicloud/np-stack/master/conf/nginx/openssl.conf | sed "s/localhost/$app.cloudapp.ml/g" > $ssl/openssl.conf
+curl -s https://raw.githubusercontent.com/tropicloud/np-stack/master/conf/nginx/openssl.conf | sed "s/localhost/*.cloudapp.ml/g" > $ssl/openssl.conf
 openssl req -nodes -sha256 -newkey rsa:2048 -keyout $ssl/server.key -out $ssl/server.csr -config $ssl/openssl.conf -batch
 openssl rsa -in $ssl/server.key -out $ssl/server.key
 openssl x509 -req -days 365 -in $ssl/server.csr -signkey $ssl/server.key -out $ssl/server.crt
-rm -f $ssl/openssl.conf
+chown -R dokku:dokku $ssl && rm -f $ssl/openssl.conf
+
+---
+
+cat ~/app.conf | sed "s/app/$app/g" > /home/dokku/${app}/nginx.conf.template
+
+---
+
+dokku delete $app && dokku mariadb:delete $app
+
