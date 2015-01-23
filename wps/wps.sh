@@ -7,7 +7,9 @@
 # version: 0.1
 # ------------------------
 
-# load functions
+wps='/usr/local/wps'
+
+# load all functions
 for f in /usr/local/wps/func/*; do . $f; done
 
 # ------------------------

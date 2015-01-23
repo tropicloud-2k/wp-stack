@@ -8,13 +8,13 @@ function wps_setup() {
 	# REPOS
 	# ------------------------
 	
-	# NGINX
-	cat /usr/local/wps/conf/yum/nginx.repo > /etc/yum.repos.d/nginx.repo
+	## NGINX
+	cat $wps/conf/yum/nginx.repo > /etc/yum.repos.d/nginx.repo
 	
-	# EPEL
+	## EPEL
 	rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
 	
-	# REMI
+	## REMI
 	rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 	
 	# ------------------------
@@ -62,19 +62,9 @@ function wps_setup() {
 	mkdir -p /app/html
 	mkdir -p /app/ssl
 	
-	cat /usr/local/wps/conf/nginx/nginx.conf > /etc/nginx/nginx.conf
-	cat /usr/local/wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
-	cat /usr/local/wps/conf/php/php-fpm.conf > /etc/php-fpm.d/www.conf
-	cat /usr/local/wps/conf/supervisor/supervisord.conf > /etc/supervisord.conf
+	cat $wps/conf/nginx/nginx.conf > /etc/nginx/nginx.conf
+	cat $wps/conf/php/php-fpm.conf > /etc/php-fpm.d/www.conf
+	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
+	cat $wps/conf/supervisor/supervisord.conf > /etc/supervisord.conf
 	
-	# ------------------------
-	# OPENSSL
-	# ------------------------
-	
-	cd /app/ssl
-	
-	openssl req -nodes -sha256 -newkey rsa:2048 -keyout app.key -out app.csr -config /usr/local/wps/conf/nginx/openssl.conf -batch
-	openssl rsa -in app.key -out app.key
-	openssl x509 -req -days 365 -in app.csr -signkey app.key -out app.crt
-
 }
