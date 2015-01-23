@@ -4,7 +4,7 @@
 
 function wps_start() {
 
-	cd $wps
+	cd $WPS
 
 	if [[  ! -f '/var/log/php-fpm.log'  ]]; then touch /var/log/php-fpm.log; fi
 	if [[  ! -f '/var/log/nginx.log'    ]]; then touch /var/log/nginx.log; fi
@@ -33,9 +33,16 @@ function wps_start() {
 			rm -rf wordpress
 		fi
 		
-		cat $wps/conf/wordpress/wp-config.php > /app/wp-config.php
-		cat $wps/conf/wordpress/db.php > /app/wordpress/db.php
+		cat $WPS/conf/wordpress/wp-config.php > /app/wp-config.php
+		cat $WPS/conf/wordpress/db.php > /app/wordpress/db.php
 	
+		wp --allow-root core install \
+		   --title=WP-STACK \
+		   --url=http://$WP_URL \
+		   --admin_name=$WP_USER \
+		   --admin_email=$WP_MAIL \
+		   --admin_password=$WP_PASS 
+		
 		# ------------------------
 		# SSL CERT.
 		# ------------------------
@@ -43,7 +50,7 @@ function wps_start() {
 		mkdir -p /app/ssl
 		cd /app/ssl
 		
-		cat $wps/conf/nginx/openssl.conf | sed "s/localhost/*.cloudapp.ml/g" > openssl.conf
+		cat $WPS/conf/nginx/openssl.conf | sed "s/localhost/$WP_URL/g" > openssl.conf
 
 		openssl req -nodes -sha256 -newkey rsa:2048 -keyout app.key -out app.csr -config openssl.conf -batch
 		openssl rsa -in app.key -out app.key

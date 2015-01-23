@@ -9,7 +9,7 @@ function wps_setup() {
 	# ------------------------
 	
 	## NGINX
-	cat $wps/conf/yum/nginx.repo > /etc/yum.repos.d/nginx.repo
+	cat $WPS/conf/yum/nginx.repo > /etc/yum.repos.d/nginx.repo
 	
 	## EPEL
 	rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
@@ -50,11 +50,11 @@ function wps_setup() {
 	easy_install supervisor-stdout
 	
 	## WP-CLI
-	wget -O /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+	wget -qO /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 	chmod +x /usr/local/bin/wp
 	
 	## JQ 
-	wget -O /usr/local/bin/jq http://stedolan.github.io/jq/download/linux64/jq
+	wget -qO /usr/local/bin/jq http://stedolan.github.io/jq/download/linux64/jq
 	chmod +x /usr/local/bin/jq
 	
 	
@@ -67,9 +67,9 @@ function wps_setup() {
 	mkdir -p /app/html
 	mkdir -p /app/ssl
 	
-	cat $wps/conf/nginx/nginx.conf > /etc/nginx/nginx.conf
-	cat $wps/conf/php/php-fpm.conf > /etc/php-fpm.d/www.conf
-	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
-	cat $wps/conf/supervisor/supervisord.conf > /etc/supervisord.conf
+	cat $WPS/conf/nginx/nginx.conf > /etc/nginx/nginx.conf
+	cat $WPS/conf/php/php-fpm.conf > /etc/php-fpm.d/www.conf
+	cat $WPS/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
+	cat $WPS/conf/supervisor/supervisord.conf > /etc/supervisord.conf
 	
 }

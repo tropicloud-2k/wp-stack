@@ -7,10 +7,10 @@
 # version: 0.1
 # ------------------------
 
-wps='/usr/local/wps'
-
 # load all functions
 for f in /usr/local/wps/func/*; do . $f; done
+
+WPS='/usr/local/wps'
 
 # ------------------------
 # WP-STACK Functions
