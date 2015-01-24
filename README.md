@@ -28,6 +28,7 @@ WordPress stack for Docker.
     
     sed -i 's|proxy_pass  http://$APP;|proxy_pass  https://$APP;|g' /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
     sed -i 's|{ server $IP:$PORT; }|{ server $IP:443; }|g' /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
+    dokku plugins:install
 
 
 #### Deplay App
@@ -39,8 +40,6 @@ WordPress stack for Docker.
     dokku mariadb:link $app $app
     cat $ssl/server.crt | dokku ssl:certificate $app
     cat $ssl/server.key | dokku ssl:key $app
-    dokku config:set $app DOKKU_ENABLE_HSTS=1
-    dokku config:set $app NGINX_VHOSTS_CUSTOM_CONFIGURATION=proxy.conf
     dokku config:set $app WP_URL=$app.cloudapp.ml WP_USER=guigo2k WP_PASS=2532xd9f WP_MAIL=guigo2k@guigo2k.com
     dokku config $app
 
