@@ -11,7 +11,7 @@ define('LOGGED_IN_SALT',   'unique phrase here');
 define('NONCE_SALT',       'unique phrase here');
 
 // ** MariaDB ** //
-$database_url = parse_url(exec('cat /etc/wps/env/DATABASE_URL'));
+$database_url = parse_url($_ENV["DATABASE_URL"]);
 $table_prefix = 'wp_';
 
 define('DB_NAME', trim($database_url['path'],'/'));
