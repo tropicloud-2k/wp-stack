@@ -1,11 +1,10 @@
 function wps_wp_install() {
 	
 	## ENV SETUP
-	mkdir -p /etc/wps/env
-	env > /etc/wps/env.sh
-
-	## DATABASE URL
-	env | grep 'DATABASE_URL'.* | cut -d= -f2 > /etc/wps/env/DATABASE_URL
+	env | grep = >> /etc/environment
+# 	mkdir -p /etc/wps/env
+# 	env > /etc/wps/env.sh
+# 	env | grep 'DATABASE_URL'.* | cut -d= -f2 > /etc/wps/env/DATABASE_URL
 	
 	## WP INSTALL
 	mkdir -p /app/wordpress
