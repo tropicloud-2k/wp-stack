@@ -26,9 +26,8 @@ WordPress stack for Docker.
     
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/dokku-alt/dokku-alt/master/bootstrap.sh)" < /dev/null
     
-    sed -i 's|proxy_pass  http://$APP;|proxy_pass  https://$APP;|g' /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
-    sed -i 's|{ server $IP:$PORT; }|{ server $IP:443; }|g' /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
-    dokku plugins:install
+    curl https://gist.githubusercontent.com/tropicloud/036560ca2f5f9d81945e/raw/ebcc40dc3ce82eebb354f72c06dd55a5e65907e2/post-deploy > nginx-vhosts/post-deploy
+    dokku plugins-install
 
 
 #### Deplay App
