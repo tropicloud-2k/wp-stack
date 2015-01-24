@@ -25,6 +25,9 @@ WordPress stack for Docker.
     openssl x509 -req -days 365 -in $ssl/server.csr -signkey $ssl/server.key -out $ssl/server.crt
     
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/dokku-alt/dokku-alt/master/bootstrap.sh)" < /dev/null
+    
+    sed -i 's|proxy_pass  http://$APP;|proxy_pass  https://$APP;|g' /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
+    sed -i 's|{ server $IP:$PORT; }|{ server $IP:443; }|g' /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
 
 
 #### Deplay App
