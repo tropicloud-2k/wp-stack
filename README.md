@@ -35,7 +35,7 @@ WordPress stack for Docker.
     app="wpstack"
     
     dokku create $app
-    dokku mariadb:create $app
+    dokku mariadb:create $app 
     dokku mariadb:link $app $app
     cat $ssl/server.crt | dokku ssl:certificate $app
     cat $ssl/server.key | dokku ssl:key $app
