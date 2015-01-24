@@ -2,9 +2,6 @@ function wps_wp_install() {
 	
 	## ENV SETUP
 	env | grep = >> /etc/environment
-# 	mkdir -p /etc/wps/env
-# 	env > /etc/wps/env.sh
-# 	env | grep 'DATABASE_URL'.* | cut -d= -f2 > /etc/wps/env/DATABASE_URL
 	
 	## WP INSTALL
 	mkdir -p /app/wordpress
@@ -18,8 +15,7 @@ function wps_wp_install() {
 	rm -rf wordpress
 	fi
 	
-#  	cat $WPS/conf/nginx/wp.conf > /etc/nginx/conf.d/default.conf
- 	cat $WPS/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
+  	cat $WPS/conf/nginx/wp.conf > /etc/nginx/conf.d/default.conf
 	cat $WPS/conf/wordpress/wp-config.php > /app/wp-config.php
 	
  	wp --allow-root core install \
