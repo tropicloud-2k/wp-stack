@@ -63,6 +63,7 @@ EOF
  	
  	rm -f /app/wordpress/wp-config.php
  	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
+  	cat $wps/conf/wordpress/db.php > /app/wordpress/db.php
  	   
 	# ------------------------
 	# WP THEME
