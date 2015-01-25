@@ -26,7 +26,7 @@ function wps_setup() {
 	
  	wp --allow-root core install \
  	   --title=WP-STACK \
- 	   --url=http://$WP_URL \
+ 	   --url=https://$WP_URL \
  	   --admin_name=$WP_USER \
  	   --admin_email=$WP_MAIL \
  	   --admin_password=$WP_PASS 
