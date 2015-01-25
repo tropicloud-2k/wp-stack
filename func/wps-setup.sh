@@ -44,7 +44,7 @@ PHP
  	   --admin_password=$WP_PASS
  	   
 	# ------------------------
-	# WP-CONFIG FIX
+	# WP CONFIG
 	# ------------------------
 	
 	cat > /app/wp-config.php <<'EOF'
@@ -62,10 +62,7 @@ EOF
  	>> /app/wp-config.php
  	
  	rm -f /app/wordpress/wp-config.php
- 	
  	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
- 	cat $wps/conf/wordpress/db.php > /app/wordpress/db.php
- 	
  	   
 	# ------------------------
 	# WP THEME
