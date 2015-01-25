@@ -23,6 +23,7 @@ function wps_setup() {
 	
   	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
 	cat $wps/conf/wordpress/wp-config.php > /app/wp-config.php
+	cat $wps/conf/wordpress/db.php > /app/wordpress/db.php
 	
  	wp --allow-root core install \
  	   --title=WP-STACK \
