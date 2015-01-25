@@ -79,7 +79,7 @@ EOF
 
 	cd /app/ssl
 	
-	cat $WPS/conf/nginx/openssl.conf | sed "s/localhost/$WP_URL/g" > openssl.conf
+	curl -L http://git.io/kmRbDw | sed "s/localhost/$DOMAIN/g" > openssl.conf
 	openssl req -nodes -sha256 -newkey rsa:2048 -keyout app.key -out app.csr -config openssl.conf -batch
 	openssl rsa -in app.key -out app.key
 	openssl x509 -req -days 365 -in app.csr -signkey app.key -out app.crt	
