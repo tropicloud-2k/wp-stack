@@ -28,6 +28,7 @@ WordPress stack for Docker.
     
     curl https://gist.githubusercontent.com/tropicloud/036560ca2f5f9d81945e/raw/9d668d978809ca751ceb47c04c07bbc44ce5e280/post-deploy > /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
     dokku plugins-install
+    dokku mariadb:create testdb && dokku mariadb:delete testdb
 
 
 #### Deplay App 
