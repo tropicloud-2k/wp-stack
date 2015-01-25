@@ -36,8 +36,6 @@ function wps_setup() {
 define('DISALLOW_FILE_EDIT', true);
 PHP
 
-	mv wp-config.php ../
-
  	wp --allow-root core install \
  	   --title=WP-STACK \
  	   --url=http://$WP_URL \
@@ -73,6 +71,6 @@ PHP
 	# ------------------------
 
 	chown nginx:nginx -R /app/wordpress && chmod 755 -R /app/wordpress
-	chown nginx:nginx /app/wp-config.php && chmod 755 /app/wp-config.php
+	mv wp-config.php /app/wp-config.php
 	
 }
