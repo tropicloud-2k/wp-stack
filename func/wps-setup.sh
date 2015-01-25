@@ -94,12 +94,4 @@ EOF
 
 	chown nginx:nginx -R /app/wordpress && chmod 755 -R /app/wordpress
 	
-	# ------------------------
-	# FIX WP-CONFIG
-	# ------------------------
-	
-	mv wp-config.php /app/wp-config.php
-	
-	cat
-	
 }
