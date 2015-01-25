@@ -15,8 +15,8 @@ function wps_wp_install() {
 	rm -rf wordpress
 	fi
 	
-  	cat $WPS/conf/nginx/wp.conf > /etc/nginx/conf.d/default.conf
-	cat $WPS/conf/wordpress/wp-config.php > /app/wp-config.php
+  	cat $WPS/_conf/nginx/wp.conf > /etc/nginx/conf.d/default.conf
+	cat $WPS/_conf/wordpress/wp-config.php > /app/wp-config.php
 	
  	wp --allow-root core install \
  	   --title=WP-STACK \
@@ -34,7 +34,7 @@ function wps_wp_install() {
 	mkdir -p /app/ssl
 	cd /app/ssl
 	
-	cat $WPS/conf/nginx/openssl.conf | sed "s/localhost/$WP_URL/g" > openssl.conf
+	cat $WPS/_conf/nginx/openssl.conf | sed "s/localhost/$WP_URL/g" > openssl.conf
 	openssl req -nodes -sha256 -newkey rsa:2048 -keyout app.key -out app.csr -config openssl.conf -batch
 	openssl rsa -in app.key -out app.key
 	openssl x509 -req -days 365 -in app.csr -signkey app.key -out app.crt	

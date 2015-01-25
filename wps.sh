@@ -8,7 +8,7 @@
 # ------------------------
 
 # load all functions
-for f in /usr/local/wps/func/*; do . $f; done
+for f in /usr/local/wps/_func/*; do . $f; done
 
 WPS='/usr/local/wps'
 
