@@ -4,7 +4,7 @@ function wps_setup() {
 	# ENV. SETUP
 	# ------------------------
 	
-	env | grep = >> /etc/environment
+	env | grep = >> /etc/environment && export TERM=xterm
 	
 	# ------------------------
 	# WP INSTALL
