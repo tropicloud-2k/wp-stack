@@ -1,6 +1,6 @@
 <?php
 
-$database_url = exec('cat /etc/environment | grep DATABASE_URL | cut -d= -f2');
+$database_url = parse_url($_ENV['DATABASE_URL']);
 
 print_r(parse_url($database_url));
 
