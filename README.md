@@ -39,7 +39,7 @@ WordPress stack for Docker.
     dokku mariadb:link $app $app
     cat $ssl/server.crt | dokku ssl:certificate $app
     cat $ssl/server.key | dokku ssl:key $app
-    dokku config:set $app WP_URL=$app.cloudapp.ml WP_USER=guigo2k WP_PASS=2532xd9f WP_MAIL=guigo2k@guigo2k.com
+    dokku config:set $app WP_URL=$app.cloudapp.ml WP_SSL=true WP_USER=guigo2k WP_PASS=2532xd9f WP_MAIL=guigo2k@guigo2k.com
     dokku config $app
     
     dokku config:set $app DOKKU_ENABLE_HTTP_HOST=1

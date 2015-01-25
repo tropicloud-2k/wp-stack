@@ -26,10 +26,12 @@ function wps_setup() {
 	
  	wp --allow-root core install \
  	   --title=WP-STACK \
- 	   --url=https://$WP_URL \
+ 	   --url=http://$WP_URL \
  	   --admin_name=$WP_USER \
  	   --admin_email=$WP_MAIL \
- 	   --admin_password=$WP_PASS 
+ 	   --admin_password=$WP_PASS
+ 	   
+ 	if [[  $WP_SSL == 'true'  ]]; then wp --allow-root option set siteurl https://$WP_URL; fi 	
 		
 	# ------------------------
 	# WP THEME
