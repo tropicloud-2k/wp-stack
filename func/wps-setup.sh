@@ -59,6 +59,4 @@ function wps_setup() {
 	chown nginx:nginx -R /app/wordpress && chmod 755 -R /app/wordpress
 	chown nginx:nginx /app/wp-config.php && chmod 755 /app/wp-config.php
 	
-	supervisorctl restart nginx
-	
 }
