@@ -53,15 +53,14 @@ PHP
 $database_url = parse_url(exec('cat /etc/environment | grep DATABASE_URL | cut -d= -f2'));
 EOF
 
- 	cat /app/wordpress/wp-config.php \
+ 	cat wp-config.php \
  	| sed "s|<?php||g" \
  	| sed "s|define('DB_NAME'.*|define('DB_NAME', trim(\$database_url['path'],'/'));|g" \
  	| sed "s|define('DB_USER'.*|define('DB_USER', \$database_url['user']);|g" \
  	| sed "s|define('DB_PASSWORD'.*|define('DB_PASSWORD', \$database_url['pass']);|g" \
  	| sed "s|define('DB_HOST'.*|define('DB_HOST', \$database_url['host'].':'.\$database_url['port']);|g" \
- 	>> /app/wp-config.php
+ 	>> /app/wp-config.php && rm -f wp-config.php
  	
- 	rm -f /app/wordpress/wp-config.php
  	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
   	cat $wps/conf/wordpress/db.php > /app/wordpress/db.php
  	   
@@ -91,5 +90,6 @@ EOF
 	# ------------------------
 
 	chown nginx:nginx -R /app/wordpress && chmod 755 -R /app/wordpress
-	
+	chown nginx:nginx /app/wp-config.php && chmod 750 -R /app/wp-config.php
+
 }
