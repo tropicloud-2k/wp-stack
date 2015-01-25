@@ -55,13 +55,17 @@ EOF
 
  	cat /app/wordpress/wp-config.php \
  	| sed "s|<?php||g" \
- 	| sed "s|define('DB_NAME'.*|define('DB_NAME', trim($database_url['path'],'/'));|g" \
- 	| sed "s|define('DB_USER'.*|define('DB_USER', $database_url['user']);|g" \
- 	| sed "s|define('DB_PASSWORD'.*|define('DB_PASSWORD', $database_url['pass']);|g" \
- 	| sed "s|define('DB_HOST'.*|define('DB_HOST', $database_url['host'].':'.$database_url['port']);|g" \
+ 	| sed "s|define('DB_NAME'.*|define('DB_NAME', trim(\$database_url['path'],'/'));|g" \
+ 	| sed "s|define('DB_USER'.*|define('DB_USER', \$database_url['user']);|g" \
+ 	| sed "s|define('DB_PASSWORD'.*|define('DB_PASSWORD', \$database_url['pass']);|g" \
+ 	| sed "s|define('DB_HOST'.*|define('DB_HOST', \$database_url['host'].':'.\$database_url['port']);|g" \
  	>> /app/wp-config.php
  	
  	rm -f /app/wordpress/wp-config.php
+ 	
+ 	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
+ 	cat $wps/conf/wordpress/db.php > /app/wordpress/db.php
+ 	
  	   
 	# ------------------------
 	# WP THEME
