@@ -30,7 +30,7 @@ WordPress stack for Docker.
     dokku plugins-install
 
 
-#### Deplay App 
+#### Deplay App
 
     app="wpstack"
     
