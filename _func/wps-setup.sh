@@ -9,7 +9,7 @@ function wps_setup() {
 	# ------------------------
 	
 	## NGINX
-	cat $WPS/_conf/yum/nginx.repo > /etc/yum.repos.d/nginx.repo
+	cat $wps/_conf/yum/nginx.repo > /etc/yum.repos.d/nginx.repo
 	
 	## EPEL
 	rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
@@ -67,8 +67,8 @@ function wps_setup() {
 	mkdir -p /app/html
 	mkdir -p /app/ssl
 	
-	cat $WPS/_conf/nginx/nginx.conf > /etc/nginx/nginx.conf
-	cat $WPS/_conf/php/php-fpm.conf > /etc/php-fpm.d/www.conf
-	cat $WPS/_conf/supervisor/supervisord.conf > /etc/supervisord.conf
+	cat $wps/_conf/nginx/nginx.conf > /etc/nginx/nginx.conf
+	cat $wps/_conf/php/php-fpm.conf > /etc/php-fpm.d/www.conf
+	cat $wps/_conf/supervisor/supervisord.conf > /etc/supervisord.conf
 	
 }

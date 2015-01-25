@@ -15,8 +15,8 @@ function wps_wp_install() {
 	rm -rf wordpress
 	fi
 	
-  	cat $WPS/_conf/nginx/wp.conf > /etc/nginx/conf.d/default.conf
-	cat $WPS/_conf/wordpress/wp-config.php > /app/wp-config.php
+  	cat $wps/_conf/nginx/wp.conf > /etc/nginx/conf.d/default.conf
+	cat $wps/_conf/wordpress/wp-config.php > /app/wp-config.php
 	
  	wp --allow-root core install \
  	   --title=WP-STACK \

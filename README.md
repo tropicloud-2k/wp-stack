@@ -26,7 +26,7 @@ WordPress stack for Docker.
     
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/dokku-alt/dokku-alt/master/bootstrap.sh)" < /dev/null
     
-    curl https://gist.githubusercontent.com/tropicloud/036560ca2f5f9d81945e/raw/ebcc40dc3ce82eebb354f72c06dd55a5e65907e2/post-deploy > nginx-vhosts/post-deploy
+    curl https://gist.githubusercontent.com/tropicloud/036560ca2f5f9d81945e/raw/ebcc40dc3ce82eebb354f72c06dd55a5e65907e2/post-deploy > /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
     dokku plugins-install
 
 
