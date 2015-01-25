@@ -7,14 +7,13 @@
 # version: 0.1
 # ------------------------
 
-# load all functions
-for f in /usr/local/wps/_func/*; do . $f; done
-
-WPS='/usr/local/wps'
+wps='/usr/local/wps'
 
 # ------------------------
 # WP-STACK Functions
 # ------------------------
+
+for f in /usr/local/wps/_func/*; do . $f; done
 
   if [[  $1 == 'setup'  ]]; then wps_setup
 elif [[  $1 == 'start'  ]]; then wps_start
