@@ -22,9 +22,22 @@ function wps_setup() {
 	fi
 	
   	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
-	cat $wps/conf/wordpress/wp-config.php > /app/wp-config.php
+# 	cat $wps/conf/wordpress/wp-config.php > /app/wp-config.php
 	cat $wps/conf/wordpress/db.php > /app/wordpress/db.php
 	
+	wp_database
+	
+	wp --allow-root core config \
+		--dbname=${DB_NAME} \
+		--dbuser=${DB_USER} \
+		--dbpass=${DB_PASS} \
+		--dbhost=${DB_HOST}:${DB_PORT} \
+		--extra-php <<PHP
+define('DISALLOW_FILE_EDIT', true);
+PHP
+
+	mv wp-config.php ../
+
  	wp --allow-root core install \
  	   --title=WP-STACK \
  	   --url=http://$WP_URL \
