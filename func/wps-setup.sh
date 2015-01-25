@@ -12,20 +12,16 @@ function wps_setup() {
 
 	mkdir -p /app/wordpress
 	cd /app/wordpress
-	
+
+	wps_db_url
+
 	wp --allow-root core download
 	if [ ! $? -eq 0 ]; then 
-	wget https://wordpress.org/latest.zip
-	unzip *.zip && rm -f *.zip
-	mv wordpress/* $(pwd)
-	rm -rf wordpress
+		wget https://wordpress.org/latest.zip
+		unzip *.zip && rm -f *.zip
+		mv wordpress/* $(pwd)
+		rm -rf wordpress
 	fi
-	
-  	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
-# 	cat $wps/conf/wordpress/wp-config.php > /app/wp-config.php
-	cat $wps/conf/wordpress/db.php > /app/wordpress/db.php
-	
-	wp_database
 	
 	wp --allow-root core config \
 		--dbname=${DB_NAME} \
@@ -33,18 +29,40 @@ function wps_setup() {
 		--dbpass=${DB_PASS} \
 		--dbhost=${DB_HOST}:${DB_PORT} \
 		--extra-php <<PHP
+define('WPCACHEHOME', '/app/wordpress/wp-content/plugins/wp-super-cache/');
 define('DISALLOW_FILE_EDIT', true);
+define('WP_CACHE', true);
 PHP
+
+	if [[  $SSL == "true"  ]]; then SCHEME="https"; else SCHEME="http"; fi
 
  	wp --allow-root core install \
  	   --title=WP-STACK \
- 	   --url=http://$WP_URL \
+ 	   --url=${SCHEME}://${DOMAIN} \
  	   --admin_name=$WP_USER \
  	   --admin_email=$WP_MAIL \
  	   --admin_password=$WP_PASS
  	   
- 	if [[  $WP_SSL == 'true'  ]]; then wp --allow-root option set siteurl https://$WP_URL; fi 	
-		
+	# ------------------------
+	# WP-CONFIG FIX
+	# ------------------------
+	
+	cat > /app/wp-config.php <<'EOF'
+<?php
+
+$database_url = parse_url(exec('cat /etc/environment | grep DATABASE_URL | cut -d= -f2'));
+EOF
+
+ 	cat /app/wordpress/wp-config.php \
+ 	| sed "s|<?php||g" \
+ 	| sed "s|define('DB_NAME'.*|define('DB_NAME', trim($database_url['path'],'/'));|g" \
+ 	| sed "s|define('DB_USER'.*|define('DB_USER', $database_url['user']);|g" \
+ 	| sed "s|define('DB_PASSWORD'.*|define('DB_PASSWORD', $database_url['pass']);|g" \
+ 	| sed "s|define('DB_HOST'.*|define('DB_HOST', $database_url['host'].':'.$database_url['port']);|g" \
+ 	>> /app/wp-config.php
+ 	
+ 	rm -f /app/wordpress/wp-config.php
+ 	   
 	# ------------------------
 	# WP THEME
 	# ------------------------
@@ -71,6 +89,13 @@ PHP
 	# ------------------------
 
 	chown nginx:nginx -R /app/wordpress && chmod 755 -R /app/wordpress
+	
+	# ------------------------
+	# FIX WP-CONFIG
+	# ------------------------
+	
 	mv wp-config.php /app/wp-config.php
+	
+	cat
 	
 }

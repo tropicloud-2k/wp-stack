@@ -1,4 +1,4 @@
-function wp_database() {
+function wps_db_url() {
 	
 	DB_HOST=$(env | grep -o 'DATABASE_URL'.* | cut -d@ -f2 | cut -d: -f1)
 	DB_PORT=$(env | grep -o 'DATABASE_URL'.* | cut -d@ -f2 | cut -d: -f2 | cut -d/ -f1)
