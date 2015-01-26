@@ -8,13 +8,6 @@ function wps_setup() {
 	cd /app/wordpress
 
 	wp --allow-root core download
-	if [ ! $? -eq 0 ]; then 
-		wget https://wordpress.org/latest.zip
-		unzip *.zip && rm -f *.zip
-		mv wordpress/* $(pwd)
-		rm -rf wordpress
-	fi
-	
 	wp --allow-root core config \
 		--dbname=${DB_NAME} \
 		--dbuser=${DB_USER} \
@@ -26,10 +19,9 @@ define('DISALLOW_FILE_EDIT', true);
 define('WP_CACHE', true);
 PHP
 
-	if [[  $SSL == "true"  ]]; then SCHEME="https"; else SCHEME="http"; fi
-	WP_URL="${SCHEME}://${DOMAIN}";
-	
- 	wp --allow-root core install \
+	if [[  $SSL == "true"  ]]; then WP_URL="https://${DOMAIN}"; else WP_URL="http://${DOMAIN}"; fi
+  
+   	wp --allow-root core install \
  	   --title=WP-STACK \
  	   --url=$WP_URL \
  	   --admin_name=$WP_USER \
