@@ -35,10 +35,11 @@ define('WP_CACHE', true);
 PHP
 
 	if [[  $SSL == "true"  ]]; then SCHEME="https"; else SCHEME="http"; fi
-
+	WP_URL="${SCHEME}://${DOMAIN}";
+	
  	wp --allow-root core install \
  	   --title=WP-STACK \
- 	   --url=${SCHEME}://${DOMAIN} \
+ 	   --url=$WP_URL \
  	   --admin_name=$WP_USER \
  	   --admin_email=$WP_MAIL \
  	   --admin_password=$WP_PASS
@@ -72,6 +73,15 @@ EOF
 	wp --allow-root theme install "https://dl.dropboxusercontent.com/s/uchou7x8a5sdwvh/Sprocket%20Responsive%20WordPress%20Theme.zip?dl=1&token_hash=AAHMw2sKVNJ0FEzwI5dEZYw-BSycyaZyNV48K84MdcoMww" --activate	
 	wp --allow-root option update tt_options --format=json '{"logo_url":"//s3.tropicloud.net/logo/logo-white-40px.png","site-link-color":"#23b4ea","header-background-color":"#333333","header-background-image":"//s3.tropicloud.net/wps-cli/img/slide-home.jpg","header-link-color":"#ffffff"}'
 	wp --allow-root post meta update 2 header_image "//s3.tropicloud.net/wps-cli/img/slide-vantagens.jpg"
+
+	# ------------------------
+	# Send welcome email
+	# ------------------------
+	
+	ADM_MAIL='admin@tropicloud.net'
+	
+	echo -e "Sending welcome email..."
+	curl -s -A 'Mandrill-Curl/1.0' -d '{"key":"JVjDagu4lFHJhgjjY2yfKw","template_name":"wp-stack","template_content":[{"name":"title","content":"[WP-STACK] New WordPress Site"}],"message":{"subject":"[WP-STACK] New WordPress Site","from_email":"'$ADM_MAIL'","from_name":"Tropicloud","to":[{"email":"'$WP_MAIL'","name":"'$WP_USER'","type":"to"}],"headers":{"Reply-To":"'$ADM_MAIL'"},"important":true,"track_opens":true,"track_clicks":true,"auto_text":false,"auto_html":false,"inline_css":false,"url_strip_qs":false,"preserve_recipients":true,"view_content_link":false,"bcc_address":"'$ADM_MAIL'","tracking_domain":null,"signing_domain":null,"return_path_domain":null,"merge":true,"global_merge_vars":[{"name":"WP_URL","content":"'$WP_URL'"},{"name":"WP_USER","content":"'$WP_USER'"},{"name":"WP_PASS","content":"'$WP_PASS'"}]}}' 'https://mandrillapp.com/api/1.0/messages/send-template.json' | jq '.'
 
 	# ------------------------
 	# SSL CERT.

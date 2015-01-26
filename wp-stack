@@ -15,9 +15,18 @@ wps='/usr/local/wps'
 
 for f in $wps/func/*; do . $f; done
 
-  if [[  $1 == 'setup'  ]]; then wps_setup
-elif [[  $1 == 'start'  ]]; then wps_start
-elif [[  $1 == 'stop'   ]]; then wps_stop
+  if [[  $1 == 'setup'  ]];   then wps_setup
+elif [[  $1 == 'start'  ]];   then wps_start
+elif [[  $1 == 'stop'  ]];    then wps_stop
+elif [[  $1 == 'restart'  ]]; then wps_restart
+elif [[  $1 == 'export'  ]];  then wps_export
+elif [[  $1 == 'import'  ]];  then wps_import
+elif [[  $1 == 'usradd'  ]];  then wps_usradd
+elif [[  $1 == 'usrdel'  ]];  then wps_usrdel
+elif [[  $1 == 'pwd'  ]];     then wps_pwd
+
+elif [[  $1 == 'db' && $2 == 'import'  ]];  then wps_db_import
+elif [[  $1 == 'db' && $2 == 'export'  ]];  then wps_db_export
 
 # ------------------------
 # WP-STACK Commands
@@ -30,17 +39,6 @@ else echo "
 
   HOW TO USE:
   
-  wps info <hostname>
-  wps create --hostname=<hostname>
-  wps destroy -c --confirm <hostname>
-  wps add <hostname>
-  wps drop <hostname>
-  wps import <hostname>
-  wps export <hostname>
-  wps backup <hostname> --all
-  wps dbprefix
-  wps image
-
 ----------------------------------------------------  
 
 "
