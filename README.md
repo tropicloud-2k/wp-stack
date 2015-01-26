@@ -1,52 +1,83 @@
-WP-STACK
-==============
-WordPress stack for Docker.  
+<img src="http://assets.tropicloud.net/wpstack/logo-wpstack-light.png" width="240" border="0" style="display: block; max-width:100%;">
 
-* [NGINX 1.7.9](http://nginx.com)
-* [PHP-FPM 5.6.4](http://php.net)
-* [CentOS 7](http://www.centos.org)
+WordPress stack for **Docker** and **Dokku-alt**.
+
+----------
 
 
-#### Install Dokku-alt
-   
-    ln -s /home/dokku ~/
-    ln -s /usr ~/
-    ln -s /var ~/
-    ln -s /etc ~/
-    
-    ssl="/var/ssl"
-    mkdir -p $ssl
-    
-    curl -s https://raw.githubusercontent.com/tropicloud/np-stack/master/conf/nginx/openssl.conf \
-    | sed "s/localhost/*.cloudapp.ml/g" > $ssl/openssl.conf
-    
-    openssl req -nodes -sha256 -newkey rsa:2048 -keyout $ssl/server.key -out $ssl/server.csr -config $ssl/openssl.conf -batch
-    openssl rsa -in $ssl/server.key -out $ssl/server.key
-    openssl x509 -req -days 365 -in $ssl/server.csr -signkey $ssl/server.key -out $ssl/server.crt
-    
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/dokku-alt/dokku-alt/master/bootstrap.sh)" < /dev/null
-    
-    curl https://gist.githubusercontent.com/tropicloud/036560ca2f5f9d81945e/raw/9d668d978809ca751ceb47c04c07bbc44ce5e280/post-deploy > /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
-    dokku plugins-install
-    dokku mariadb:create testdb && dokku mariadb:delete testdb
+Deploy with Docker
+-------------
+
+#### Create a database
+```shell
+docker run --name mariadb \
+-e MYSQL_ROOT_PASSWORD="password" \
+-e MYSQL_USER="db_user" \
+-e MYSQL_PASSWORD="db_pass" \
+-e MYSQL_DATABASE="wpstack" \
+-d mariadb
+```
+
+#### Build the Docker image
+```shell
+git clone https://github.com/tropicloud/wp-stack.git
+docker build -t tropicloud/wp-stack wp-stack
+```
+
+#### Deploy the App
+```shell
+docker run --name wpstack --link mariadb:mariadb \
+-e WP_USER="wp_user" \
+-e WP_PASS="wp_pass" \
+-e WP_MAIL="user@example.com" \
+-e DOMAIN="wpstack.example.com" \
+-p 80:80 -p 443:443 -d tropicloud/wp-stack
+```
+
+Now visit  [http://wpstack.example.com](#) to check the installation.
 
 
-#### Deplay App 
-
-    app="wpstack"
-    
-    dokku create $app
-    dokku mariadb:create $app 
-    dokku mariadb:link $app $app
-    cat $ssl/server.crt | dokku ssl:certificate $app
-    cat $ssl/server.key | dokku ssl:key $app
-    dokku config:set $app DOMAIN=$app.cloudapp.ml SSL=true WP_USER=guigo2k WP_PASS=2532xd9f WP_MAIL=guigo2k@guigo2k.com
-    dokku config $app
-    
-    dokku config:set $app DOKKU_ENABLE_HTTP_HOST=1
+----------
 
 
-#### Delete App
+Deploy with Dokku-alt
+-------------
 
-    dokku delete $app && dokku mariadb:delete $app
+#### Create App on Dokku host
+```shell
+app="wpstack"
+ 
+dokku create $app
+dokku mariadb:create $app 
+dokku mariadb:link $app $app
+dokku config:set $app DOKKU_ENABLE_HTTP_HOST=1
+dokku config:set $app \
+  DOMAIN=$app.example.com \
+  WP_USER=wp_user \
+  WP_PASS=wp_pass \
+  WP_MAIL=user@example.com
+dokku config $app
+```
 
+#### Clone the repository
+```shell
+git clone https://github.com/tropicloud/wp-stack.git
+cd wp-stack
+```
+
+#### Add Dokku remote
+```shell
+git remote add dokku@example.com:wpstack
+```
+
+#### Deploy the App
+```shell
+docker run --name wpstack --link mariadb:mariadb \
+-e WP_USER="wp_user" \
+-e WP_PASS="wp_pass" \
+-e WP_MAIL="user@example.com" \
+-e DOMAIN="wpstack.example.com" \
+-p 80:80 -p 443:443 -d tropicloud/wp-stack
+```
+
+Now visit  [http://wpstack.example.com](#) to check the installation.
