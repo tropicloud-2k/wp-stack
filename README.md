@@ -43,7 +43,7 @@ Now visit  [http://wpstack.example.com](#) to check the installation.
 Deploy with Dokku-alt
 -------------
 
-#### Create App on Dokku host
+#### Create App on Dokku host (http)
 ```shell
 app="wpstack"
  
@@ -59,25 +59,38 @@ dokku config:set $app \
 dokku config $app
 ```
 
-#### Clone the repository
+#### Create App on Dokku host (SSL)
 ```shell
-git clone https://github.com/tropicloud/wp-stack.git
-cd wp-stack
-```
-
-#### Add Dokku remote
-```shell
-git remote add dokku@example.com:wpstack
+mkdir -p /var/ssl
+ 
+curl -L http://git.io/kmRbDw | sed "s/localhost/*.example.com/g" > /var/ssl/openssl.conf
+openssl req -nodes -sha256 -newkey rsa:2048 -keyout /var/ssl/server.key -out /var/ssl/server.csr -config /var/ssl/openssl.conf -batch
+openssl rsa -in /var/ssl/server.key -out /var/ssl/server.key
+openssl x509 -req -days 365 -in /var/ssl/server.csr -signkey /var/ssl/server.key -out /var/ssl/server.crt
+ 
+app="wpstack"
+ 
+dokku create $app
+dokku mariadb:create $app 
+dokku mariadb:link $app $app
+cat /var/ssl/server.crt | dokku ssl:certificate $app
+cat /var/ssl/server.key | dokku ssl:key $app
+dokku config:set $app \
+  DOMAIN=$app.cloudapp.ml \
+  SSL=true \
+  WP_USER=guigo2k \
+  WP_PASS=2532xd9f \
+  WP_MAIL=guigo2k@guigo2k.com
+dokku config $app
 ```
 
 #### Deploy the App
 ```shell
-docker run --name wpstack --link mariadb:mariadb \
--e WP_USER="wp_user" \
--e WP_PASS="wp_pass" \
--e WP_MAIL="user@example.com" \
--e DOMAIN="wpstack.example.com" \
--p 80:80 -p 443:443 -d tropicloud/wp-stack
+git clone https://github.com/tropicloud/wp-stack.git
+cd wp-stack
+
+git remote add dokku@example.com:wpstack
+git push dokku master
 ```
 
 Now visit  [http://wpstack.example.com](#) to check the installation.
