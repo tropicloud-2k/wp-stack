@@ -2,8 +2,6 @@
 
 WordPress stack for **Docker** and **Dokku-alt**
 
-----------
-
 
 Deploy with Docker
 -------------
