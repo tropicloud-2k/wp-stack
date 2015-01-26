@@ -1,6 +1,6 @@
 <img src="http://assets.tropicloud.net/wpstack/logo-wpstack-light.png" width="240" border="0" style="display: block; max-width:100%;">
 
-WordPress stack for **Docker** and **Dokku-alt**.
+WordPress stack for **Docker** and **Dokku-alt**
 
 ----------
 
@@ -37,16 +37,13 @@ docker run --name wpstack --link mariadb:mariadb \
 Now visit  [http://wpstack.example.com](#) to check the installation.
 
 
-----------
-
-
 Deploy with Dokku-alt
 -------------
 
-#### Create App on Dokku host (http)
+#### Create App on Dokku Host
 ```shell
 app="wpstack"
- 
+
 dokku create $app
 dokku mariadb:create $app 
 dokku mariadb:link $app $app
@@ -59,7 +56,29 @@ dokku config:set $app \
 dokku config $app
 ```
 
-#### Create App on Dokku host (SSL)
+#### Clone the Repo
+```shell
+git clone https://github.com/tropicloud/wp-stack.git
+```
+
+#### Add Dokku remote
+```shell
+cd wp-stack
+git remote add dokku@example.com:wpstack
+```
+
+#### Deploy the App
+```shell
+git push dokku master
+```
+
+Now visit  [http://wpstack.example.com](#) to check the installation.
+
+
+SSL Support
+-------------
+
+#### Create wildcard SSL cert.
 ```shell
 mkdir -p /var/ssl
  
@@ -67,9 +86,12 @@ curl -L http://git.io/kmRbDw | sed "s/localhost/*.example.com/g" > /var/ssl/open
 openssl req -nodes -sha256 -newkey rsa:2048 -keyout /var/ssl/server.key -out /var/ssl/server.csr -config /var/ssl/openssl.conf -batch
 openssl rsa -in /var/ssl/server.key -out /var/ssl/server.key
 openssl x509 -req -days 365 -in /var/ssl/server.csr -signkey /var/ssl/server.key -out /var/ssl/server.crt
- 
+``` 
+
+#### Create App on Dokku Host
+```shell
 app="wpstack"
- 
+
 dokku create $app
 dokku mariadb:create $app 
 dokku mariadb:link $app $app
@@ -84,13 +106,18 @@ dokku config:set $app \
 dokku config $app
 ```
 
-#### Deploy the App
+#### Clone the Repo
 ```shell
 git clone https://github.com/tropicloud/wp-stack.git
-cd wp-stack
-
-git remote add dokku@example.com:wpstack
-git push dokku master
 ```
 
-Now visit  [http://wpstack.example.com](#) to check the installation.
+#### Add Dokku remote
+```shell
+cd wp-stack
+git remote add dokku@example.com:wpstack
+```
+
+#### Deploy the App
+```shell
+git push dokku master
+```
