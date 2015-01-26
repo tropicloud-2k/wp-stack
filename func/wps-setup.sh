@@ -1,19 +1,11 @@
 function wps_setup() {
 	
 	# ------------------------
-	# ENV. SETUP
-	# ------------------------
-	
-	env | grep = >> /etc/environment && export TERM=xterm
-	
-	# ------------------------
 	# WP INSTALL
 	# ------------------------
 
 	mkdir -p /app/wordpress
 	cd /app/wordpress
-
-	wps_db_url
 
 	wp --allow-root core download
 	if [ ! $? -eq 0 ]; then 
