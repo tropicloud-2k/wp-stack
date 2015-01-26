@@ -78,9 +78,9 @@ cat /var/ssl/server.key | dokku ssl:key $app
 dokku config:set $app \
   DOMAIN=$app.cloudapp.ml \
   SSL=true \
-  WP_USER=guigo2k \
-  WP_PASS=2532xd9f \
-  WP_MAIL=guigo2k@guigo2k.com
+  WP_USER=wp_user \
+  WP_PASS=wp_pass \
+  WP_MAIL=user@example.com
 dokku config $app
 ```
 
