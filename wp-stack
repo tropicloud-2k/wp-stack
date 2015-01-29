@@ -13,7 +13,7 @@ wps='/usr/local/wps'
 # WP-STACK Functions
 # ------------------------
 
-for f in $wps/func/*.sh; do . $f; done
+for f in $wps/bin/*.sh; do . $f; done
 
   if [[  $1 == 'setup'  ]];   then wps_setup $@
 elif [[  $1 == 'start'  ]];   then wps_start $@
