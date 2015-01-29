@@ -35,7 +35,7 @@ PHP
  	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
 	cat > /app/wp-config.php <<'EOF'
 <?php
-$database_url = file_get_contents('/etc/env/DATABASE_URL');
+$database_url = parse_url(file_get_contents('/etc/env/DATABASE_URL'));
 EOF
 
  	cat wp-config.php \
