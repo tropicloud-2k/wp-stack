@@ -78,8 +78,6 @@ EOF
 	# WELCOME EMAIL
 	# ------------------------
 	
-	cd $wps/func
-	
-	./wps-mail welcome -d $WP_URL -u $WP_USER -p $WP_PASS -m $WP_MAIL
+	wps-mail welcome -d $WP_URL -u $WP_USER -p $WP_PASS -m $WP_MAIL
 	
 }
