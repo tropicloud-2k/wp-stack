@@ -6,7 +6,7 @@ function wps_environment() {
 	
 	if [[  -z $DATABASE_URL  ]]; then
 
-		DB_HOST=$(env | grep 'MARIADB_NAME' | cut -d/ -f3)
+		DB_HOST=$(env | grep 'MARIADB_PORT_3306_TCP_ADDR' | cut -d= -f2)
 		DB_PORT=$(env | grep 'MARIADB_PORT_3306_TCP_PORT' | cut -d= -f2)
 		DB_NAME=$(env | grep 'MARIADB_ENV_MYSQL_DATABASE' | cut -d= -f2)
 		DB_USER=$(env | grep 'MARIADB_ENV_MYSQL_USER' | cut -d= -f2)
