@@ -9,11 +9,11 @@ function wps_setup() {
 
 	wp --allow-root core download
 	wp --allow-root core config \
-		--dbname=${DB_NAME} \
-		--dbuser=${DB_USER} \
-		--dbpass=${DB_PASS} \
-		--dbhost=${DB_HOST}:${DB_PORT} \
-		--extra-php <<PHP
+	   --dbname=${DB_NAME} \
+	   --dbuser=${DB_USER} \
+	   --dbpass=${DB_PASS} \
+	   --dbhost=${DB_HOST}:${DB_PORT} \
+	   --extra-php <<PHP
 define('WPCACHEHOME', '/app/wordpress/wp-content/plugins/wp-super-cache/');
 define('DISALLOW_FILE_EDIT', true);
 define('WP_CACHE', true);
