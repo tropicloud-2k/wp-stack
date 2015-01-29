@@ -78,6 +78,6 @@ EOF
 	# WELCOME EMAIL
 	# ------------------------
 	
-	$wps/func/wps-mail welcome -d $WP_URL -u $WP_USER -p $WP_PASS -m $WP_MAIL | jq '.'
+	exec $wps/func/wps-mail welcome -d $WP_URL -u $WP_USER -p $WP_PASS -m $WP_MAIL | jq '.'
 	
 }
