@@ -29,14 +29,15 @@ function wps_environment() {
 	# ENV. SETUP
 	# ------------------------
 
+	env | grep = >> /etc/environment
+
 	mkdir -p /etc/env
 	
-	for var in $(env); do 
+	for var in $(cat /etc/environment); do 
 		key=$(echo $var | cut -d= -f1)
 		val=$(echo $var | cut -d= -f2)
-		echo -n $val > /etc/env/${key}
+		echo -ne $val > /etc/env/${key}
 	done
 	
-	env | grep = >> /etc/environment
 	
 }
