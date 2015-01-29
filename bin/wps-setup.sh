@@ -61,7 +61,7 @@ EOF
 
 	cd /app/ssl
 	
-	curl -L http://git.io/kmRbDw | sed "s/localhost/$WP_DOMAIN/g" > openssl.conf
+	cat $wps/conf/nginx/openssl.conf | sed "s/localhost/$WP_DOMAIN/g" > openssl.conf
 	openssl req -nodes -sha256 -newkey rsa:2048 -keyout app.key -out app.csr -config openssl.conf -batch
 	openssl rsa -in app.key -out app.key
 	openssl x509 -req -days 365 -in app.csr -signkey app.key -out app.crt	
@@ -78,6 +78,6 @@ EOF
 	# WELCOME EMAIL
 	# ------------------------
 	
-	$wps/bin/wps-mail welcome -d $WP_URL -u $WP_USER -p $WP_PASS -m $WP_MAIL | jq '.'
+	$wps/bin/wps-mail welcome -d $WP_URL -u $WP_USER -p $WP_PASS -m $WP_MAIL
 	
 }
