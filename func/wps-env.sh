@@ -34,7 +34,7 @@ function wps_environment() {
 	for var in $(env); do 
 		key=$(echo $var | cut -d= -f1)
 		val=$(echo $var | cut -d= -f2)
-		echo $val > /etc/env/${key}
+		echo -n $val > /etc/env/${key}
 	done
 	
 	env | grep = >> /etc/environment
