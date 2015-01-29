@@ -4,7 +4,7 @@
 
 function wps_start() {
 
-	database_url
+	wps_environment
 
 	if [[  ! -f '/var/log/php-fpm.log'  ]]; then touch /var/log/php-fpm.log; fi
 	if [[  ! -f '/var/log/nginx.log'    ]]; then touch /var/log/nginx.log; fi

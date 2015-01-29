@@ -19,7 +19,7 @@ define('DISALLOW_FILE_EDIT', true);
 define('WP_CACHE', true);
 PHP
 
-	if [[  $SSL == "true"  ]]; then WP_URL="https://${DOMAIN}"; else WP_URL="http://${DOMAIN}"; fi
+	if [[  $WP_SSL == "true"  ]]; then WP_URL="https://${WP_DOMAIN}"; else WP_URL="http://${WP_DOMAIN}"; fi
   
    	wp --allow-root core install \
  	   --title=WP-STACK \
@@ -32,10 +32,10 @@ PHP
 	# WP CONFIG
 	# ------------------------
 	
+ 	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
 	cat > /app/wp-config.php <<'EOF'
 <?php
-
-$database_url = parse_url(exec('cat /etc/environment | grep DATABASE_URL | cut -d= -f2'));
+$database_url = file_get_contents('/etc/env/DATABASE_URL');
 EOF
 
  	cat wp-config.php \
@@ -45,10 +45,7 @@ EOF
  	| sed "s|define('DB_PASSWORD'.*|define('DB_PASSWORD', \$database_url['pass']);|g" \
  	| sed "s|define('DB_HOST'.*|define('DB_HOST', \$database_url['host'].':'.\$database_url['port']);|g" \
  	>> /app/wp-config.php && rm -f wp-config.php
- 	
- 	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
-  	cat $wps/conf/wordpress/database_url.php > /app/wordpress/database_url.php
- 	   
+
 	# ------------------------
 	# WP THEME
 	# ------------------------
@@ -74,7 +71,7 @@ EOF
 
 	cd /app/ssl
 	
-	curl -L http://git.io/kmRbDw | sed "s/localhost/$DOMAIN/g" > openssl.conf
+	curl -L http://git.io/kmRbDw | sed "s/localhost/$WP_DOMAIN/g" > openssl.conf
 	openssl req -nodes -sha256 -newkey rsa:2048 -keyout app.key -out app.csr -config openssl.conf -batch
 	openssl rsa -in app.key -out app.key
 	openssl x509 -req -days 365 -in app.csr -signkey app.key -out app.crt	

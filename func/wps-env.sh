@@ -1,4 +1,4 @@
-function database_url() {
+function wps_environment() {
 	
 	# ------------------------
 	# DATABASE URL
