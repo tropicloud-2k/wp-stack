@@ -39,5 +39,4 @@ function wps_environment() {
 		echo -ne $val > /etc/env/${key}
 	done
 	
-	
 }
