@@ -78,6 +78,7 @@ EOF
 	# WELCOME EMAIL
 	# ------------------------
 	
+	chmod u+x $wps/func/wps-mail
 	exec $wps/func/wps-mail welcome -d $WP_URL -u $WP_USER -p $WP_PASS -m $WP_MAIL | jq '.'
 	
 }
