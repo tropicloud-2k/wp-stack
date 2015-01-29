@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ------------------------
-# Tropicloud's WP-STACK
+# Tropicloud WP-STACK
 # ------------------------
 # @author: Guigo (guigo.pw)
 # version: 0.2
@@ -13,10 +13,10 @@ wps='/usr/local/wps'
 # WP-STACK Functions
 # ------------------------
 
-for f in $wps/func/*; do . $f; done
+for f in $wps/func/*.sh; do . $f; done
 
-  if [[  $1 == 'setup'  ]];   then wps_setup
-elif [[  $1 == 'start'  ]];   then wps_start
+  if [[  $1 == 'setup'  ]];   then wps_setup $@
+elif [[  $1 == 'start'  ]];   then wps_start $@
 elif [[  $1 == 'stop'  ]];    then wps_stop $@
 elif [[  $1 == 'restart'  ]]; then wps_restart $@
 elif [[  $1 == 'export'  ]];  then wps_export $@
