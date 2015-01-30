@@ -46,7 +46,7 @@ docker run --name wpstack --link mariadb:mariadb \
 -p 80:80 -p 443:443 -d tropicloud/wp-stack
 ```
 
-Now visit [http://wpstack.example.com](#) to check the installation.
+Now visit [http://example.com](#) to check the installation.
 
 
 Deploy with Dokku-alt
