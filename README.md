@@ -136,5 +136,3 @@ git push dokku master
 ```
 
 Now visit [http://wpstack.example.com](#) to check the installation.
-
-dorium dorium
