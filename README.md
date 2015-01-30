@@ -1,7 +1,21 @@
 <img src="http://assets.tropicloud.net/wpstack/logo-wpstack-light.png" width="240" border="0" style="display: block; max-width:100%;">
 
-WordPress stack for **Docker** and **Dokku-alt**
+WP-STACK is a minimal WordPress stack built for speed and portability. It is platform agnostic and will run on any machine with [Docker](http://docker.com) installed. It also plays nice with Docker orchestrators like [Deis](http://deis.io), [Panamax](http://panamax.io) and [Dokku-alt](https://github.com/dokku-alt/dokku-alt).
 
+Features
+-------------
+* Docker based WP environment
+* NGINX web-server with PHP-FPM
+* External MariaDB database
+* Supervisor processes control
+* WP-CLI command line tool
+* WPS command line tool
+* Performance optimisation
+* WordPress SEO rewrite rules
+* Amazon S3 backups (coming soon)
+* NewRelic monitoring (coming soon)
+* Import existing sites (coming soon)
+* Built with official CentOS 7
 
 Deploy with Docker
 -------------
@@ -10,8 +24,8 @@ Deploy with Docker
 ```shell
 docker run --name mariadb \
 -e MYSQL_ROOT_PASSWORD="password" \
--e MYSQL_USER="db_user" \
--e MYSQL_PASSWORD="db_pass" \
+-e MYSQL_USER="username" \
+-e MYSQL_PASSWORD="password" \
 -e MYSQL_DATABASE="wpstack" \
 -d mariadb
 ```
@@ -25,8 +39,8 @@ docker build -t tropicloud/wp-stack wp-stack
 #### Deploy the App
 ```shell
 docker run --name wpstack --link mariadb:mariadb \
--e WP_USER="wp_user" \
--e WP_PASS="wp_pass" \
+-e WP_USER="username" \
+-e WP_PASS="password" \
 -e WP_MAIL="user@example.com" \
 -e WP_DOMAIN="example.com" \
 -p 80:80 -p 443:443 -d tropicloud/wp-stack
@@ -38,7 +52,7 @@ Now visit [http://wpstack.example.com](#) to check the installation.
 Deploy with Dokku-alt
 -------------
 
-#### Create App on Dokku Host
+#### Create a new app on Dokku host
 ```shell
 app="wpstack"
 
@@ -47,13 +61,12 @@ dokku mariadb:create $app
 dokku mariadb:link $app $app
 dokku config:set $app \
 	WP_DOMAIN=example.com \
-	WP_USER=wp_user \
-	WP_PASS=wp_pass \
+	WP_USER=username \
+	WP_PASS=pasword \
 	WP_MAIL=user@example.com
-dokku config $app
 ```
 
-#### Clone the Repo
+#### Clone the repo locally
 ```shell
 git clone https://github.com/tropicloud/wp-stack.git
 ```
@@ -69,13 +82,13 @@ git remote add dokku@example.com:wpstack
 git push dokku master
 ```
 
-Now visit [http://wpstack.example.com](#) to check the installation.
+Now visit [http://example.com](#) to check the installation.
 
 
-SSL Support
+Dokku-alt SSL suport
 -------------
 
-#### Create wildcard SSL cert.
+#### Create a wildcard SSL certificate
 ```shell
 mkdir -p /var/ssl
  
@@ -85,30 +98,34 @@ openssl rsa -in /var/ssl/server.key -out /var/ssl/server.key
 openssl x509 -req -days 365 -in /var/ssl/server.csr -signkey /var/ssl/server.key -out /var/ssl/server.crt
 ``` 
 
-#### Create App on Dokku Host
+#### Apply Dokku-alt SSL fix
+```
+curl -L http://git.io/0V6vUA > /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
+dokku plugins-install
+```
+
+#### Create a new app on Dokku host
 ```shell
 app="wpstack"
-
 dokku create $app
 dokku mariadb:create $app 
 dokku mariadb:link $app $app
 cat /var/ssl/server.crt | dokku ssl:certificate $app
 cat /var/ssl/server.key | dokku ssl:key $app
 dokku config:set $app \
-  WP_DOMAIN=$app.cloudapp.ml \
+  WP_DOMAIN=example.com \
   WP_SSL=true \
-  WP_USER=wp_user \
-  WP_PASS=wp_pass \
+  WP_USER=username \
+  WP_PASS=password \
   WP_MAIL=user@example.com
-dokku config $app
 ```
 
-#### Clone the Repo
+#### Clone the repo locally
 ```shell
 git clone https://github.com/tropicloud/wp-stack.git
 ```
 
-#### Add Dokku remote
+#### Add the Dokku remote locally
 ```shell
 cd wp-stack
 git remote add dokku@example.com:wpstack
