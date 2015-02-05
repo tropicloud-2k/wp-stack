@@ -4,17 +4,16 @@ WP-STACK is a minimal WordPress stack built for speed and portability. It is pla
 
 Features
 -------------
-* Environment built on CentOS 7
-* NGINX web-server with PHP-FPM
-* External MariaDB database
+* Built on CentOS 7
+* NGINX + PHP-FPM
+* SSL/SPDY support
+* External database
 * Supervisor processes control
 * WP-CLI command line tool
-* WPS command line tool
-* Performance optimisation
-* WordPress SEO rewrite rules
 * Amazon S3 backups (coming soon)
 * NewRelic monitoring (coming soon)
 * Import existing sites (coming soon)
+* Web Application Firewall (coming soon)
 
 Deploy with Docker
 -------------
