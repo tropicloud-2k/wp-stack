@@ -33,6 +33,9 @@ PHP
 	# ------------------------
 	
  	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
+	cat $wps/conf/nginx/wpsecure.conf > /etc/nginx/wpsecure.conf
+	cat $wps/conf/nginx/wpsupercache.conf > /etc/nginx/wpsupercache.conf
+
 	cat > /app/wp-config.php <<'EOF'
 <?php
 $database_url = parse_url(file_get_contents('/etc/env/DATABASE_URL'));
@@ -55,7 +58,9 @@ EOF
 	wp --allow-root option update tt_options --format=json '{"logo_url":"//s3.tropicloud.net/logo/logo-white-40px.png","site-link-color":"#23b4ea","header-background-color":"#333333","header-background-image":"//s3.tropicloud.net/wps-cli/img/slide-home.jpg","header-link-color":"#ffffff"}'
 	wp --allow-root post meta update 2 header_image "//s3.tropicloud.net/wps-cli/img/slide-vantagens.jpg"
 	
+	PLUGINS='true'
 	
+	if [[  $PLUGINS == 'true'  ]]; then
 		# ------------------------
 		# Install WP plugins
 		# ------------------------
@@ -108,7 +113,7 @@ $wp_cache_slash_check = 1; //Added by WP-Cache Manager
 $wp_cache_mod_rewrite = 1; //Added by WP-Cache Manager
 EOF
 		cat ${WPCACHEHOME}/wp-cache-config-sample.php | sed 's/<?php//g' >> /app/wordpress/wp-content/wp-cache-config.php	
-		sed -i 's|cache_enabled = false|cache_enabled = true|g' /app/wordpress/wp-content/wp-cache-config.php
+# 		sed -i 's|cache_enabled = false|cache_enabled = true|g' /app/wordpress/wp-content/wp-cache-config.php
 		sed -i 's|cache_compression = 0|cache_compression = 1|g' /app/wordpress/wp-content/wp-cache-config.php
 		sed -i 's|cache_max_time = 3600|cache_max_time = 86400|g' /app/wordpress/wp-content/wp-cache-config.php
 		cat ${WPCACHEHOME}/advanced-cache.php > /app/wordpress/wp-content/advanced-cache.php
@@ -118,11 +123,11 @@ EOF
 		# Ninja Firewall
 		# ------------------------
 		
-		cat >> /app/wordpress/.htninja <<'EOF'
+		cat >> /app/.htninja <<'EOF'
 <?php
 
 // To tell NinjaFirewall where you moved your WP config file,
-$wp_config = 'SITEROOT/wp-config.php';
+$wp_config = '/app/wp-config.php';
 
 
 // Users of Cloudflare CDN:
@@ -131,9 +136,9 @@ if (! empty($_SERVER["HTTP_CF_CONNECTING_IP"]) &&
 	$_SERVER["REMOTE_ADDR"] = $_SERVER["HTTP_CF_CONNECTING_IP"];
 }
 EOF
-	 	sed -i "s|SITEROOT|/app/wordpress|g" /app/wordpress/.htninja
 	 	wp --allow-root plugin install ninjafirewall --activate
 	
+	fi
 
 	# ------------------------
 	# SSL CERT.
