@@ -1,0 +1,11 @@
+<?php
+
+// WP config file
+$wp_config = '/app/wp-config.php';
+
+
+// Cloudflare CDN
+if (! empty($_SERVER["HTTP_CF_CONNECTING_IP"]) &&
+filter_var($_SERVER["HTTP_CF_CONNECTING_IP"], FILTER_VALIDATE_IP) ) {
+$_SERVER["REMOTE_ADDR"] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+}

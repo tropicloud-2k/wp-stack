@@ -19,11 +19,15 @@ for f in $wps/bin/*.sh; do . $f; done
 elif [[  $1 == 'start'  ]];   then wps_start $@
 elif [[  $1 == 'stop'  ]];    then wps_stop $@
 elif [[  $1 == 'restart'  ]]; then wps_restart $@
-elif [[  $1 == 'export'  ]];  then wps_export $@
+
 elif [[  $1 == 'import'  ]];  then wps_import $@
+elif [[  $1 == 'export'  ]];  then wps_export $@
+
 elif [[  $1 == 'usradd'  ]];  then wps_usradd $@
 elif [[  $1 == 'usrdel'  ]];  then wps_usrdel $@
 elif [[  $1 == 'pwd'  ]];     then wps_pwd $@
+
+elif [[  $1 == 'plugin'  ]];  then wps_plugin $@
 
 elif [[  $1 == 'db' && $2 == 'import'  ]];  then wps_db_import
 elif [[  $1 == 'db' && $2 == 'export'  ]];  then wps_db_export

@@ -1,5 +1,10 @@
 function wps_setup() {
 
+	if [[  $WP_SSL == "true"  ]];
+		then WP_URL="https://${WP_DOMAIN}";
+		else WP_URL="http://${WP_DOMAIN}";
+	fi
+
 	# ------------------------
 	# WP INSTALL
 	# ------------------------
@@ -18,8 +23,6 @@ define('WPCACHEHOME', '/app/wordpress/wp-content/plugins/wp-super-cache/');
 define('DISALLOW_FILE_EDIT', true);
 define('WP_CACHE', true);
 PHP
-
-	if [[  $WP_SSL == "true"  ]]; then WP_URL="https://${WP_DOMAIN}"; else WP_URL="http://${WP_DOMAIN}"; fi
   
    	wp --allow-root core install \
  	   --title=WP-STACK \
@@ -28,14 +31,6 @@ PHP
  	   --admin_email=$WP_MAIL \
  	   --admin_password=$WP_PASS
  	   
-	# ------------------------
-	# WP CONFIG
-	# ------------------------
-	
- 	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
-	cat $wps/conf/nginx/wpsecure.conf > /etc/nginx/wpsecure.conf
-	cat $wps/conf/nginx/wpsupercache.conf > /etc/nginx/wpsupercache.conf
-
 # 	cat > /app/wp-config.php <<'EOF'
 # <?php
 # $database_url = parse_url(file_get_contents('/etc/env/DATABASE_URL'));
@@ -60,9 +55,13 @@ PHP
 	wp --allow-root option update tt_options --format=json '{"logo_url":"//s3.tropicloud.net/logo/logo-white-40px.png","site-link-color":"#23b4ea","header-background-color":"#333333","header-background-image":"//s3.tropicloud.net/wps-cli/img/slide-home.jpg","header-link-color":"#ffffff"}'
 	wp --allow-root post meta update 2 header_image "//s3.tropicloud.net/wps-cli/img/slide-vantagens.jpg"
 	
-	PLUGINS='true'
+	# ------------------------
+	# NGINX
+	# ------------------------
 	
-	if [[  $PLUGINS == 'true'  ]]; then wps_plugins; fi
+ 	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
+	cat $wps/conf/nginx/wpsecure.conf > /etc/nginx/wpsecure.conf
+	cat $wps/conf/nginx/wpsupercache.conf > /etc/nginx/wpsupercache.conf
 
 	# ------------------------
 	# SSL CERT.
@@ -88,5 +87,5 @@ PHP
 	# ------------------------
 	
 	$wps/bin/wps-mail welcome -d $WP_URL -u $WP_USER -p $WP_PASS -m $WP_MAIL
-	
+
 }
