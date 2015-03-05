@@ -1,5 +1,7 @@
 function wps_plugin() {
 
+	cd /app/wordpress
+	
 	# ------------------------
 	# Install WP plugins
 	# ------------------------
