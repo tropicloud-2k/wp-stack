@@ -40,6 +40,8 @@ function wps_environment() {
 	# ENV. SETUP
 	# ------------------------
 
+	if [[  -f /etc/environment  ]]; then rm -f /etc/environment; fi
+	
 	env | grep = >> /etc/environment
 
 	mkdir -p /etc/env
