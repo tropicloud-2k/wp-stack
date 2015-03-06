@@ -1,21 +1,17 @@
 <img src="http://assets.tropicloud.net/wpstack/logo-wpstack-light.png" width="240" border="0" style="display: block; max-width:100%;">
 
-WP-STACK is a minimal WordPress stack built for speed and portability. It is platform agnostic and will run on any machine with [Docker](http://docker.com) installed. It also plays nice with Docker orchestrators like [Deis](http://deis.io), [Panamax](http://panamax.io) and [Dokku-alt](https://github.com/dokku-alt/dokku-alt).
+WP-STACK is a minimal WordPress stack for Docker and [Dokku](https://github.com/progrium/dokku).
 
 Features
 -------------
-* Built on CentOS 7
 * NGINX + PHP-FPM
 * SSL/SPDY support
-* External database
-* Supervisor processes control
-* WP-CLI command line tool
-* Amazon S3 backups (coming soon)
-* NewRelic monitoring (coming soon)
-* Import existing sites (coming soon)
-* Web Application Firewall (coming soon)
+* Web App Firewall (WAF)
+* WP-CLI Command line tool
+* Amazon S3 backups (soon)
+* Import/Export sites (soon)
 
-Deploy with Docker
+Deploying with Docker
 -------------
 
 #### Create a database
@@ -36,7 +32,7 @@ docker build -t tropicloud/wp-stack wp-stack
 
 #### Deploy the App
 ```shell
-docker run --name wpstack --link mariadb:mariadb \
+docker run --name wpstack --link mariadb:db \
 -e WP_USER="username" \
 -e WP_PASS="password" \
 -e WP_MAIL="user@example.com" \
@@ -47,7 +43,7 @@ docker run --name wpstack --link mariadb:mariadb \
 Now visit [http://example.com](#) to check the installation.
 
 
-Deploy with Dokku-alt
+Deploying with Dokku
 -------------
 
 #### Create a new app on Dokku host
@@ -70,60 +66,6 @@ git clone https://github.com/tropicloud/wp-stack.git
 ```
 
 #### Add Dokku remote
-```shell
-cd wp-stack
-git remote add dokku@example.com:wpstack
-```
-
-#### Deploy the App
-```shell
-git push dokku master
-```
-
-Now visit [http://wpstack.example.com](#) to check the installation.
-
-
-Dokku-alt SSL suport
--------------
-
-#### Create a wildcard SSL certificate
-```shell
-mkdir -p /var/ssl
- 
-curl -L http://git.io/kmRbDw | sed "s/localhost/example.com/g" > /var/ssl/openssl.conf
-openssl req -nodes -sha256 -newkey rsa:2048 -keyout /var/ssl/server.key -out /var/ssl/server.csr -config /var/ssl/openssl.conf -batch
-openssl rsa -in /var/ssl/server.key -out /var/ssl/server.key
-openssl x509 -req -days 365 -in /var/ssl/server.csr -signkey /var/ssl/server.key -out /var/ssl/server.crt
-``` 
-
-#### Apply Dokku-alt SSL fix
-```
-curl -L http://git.io/0V6vUA > /var/lib/dokku-alt/plugins/nginx-vhosts/post-deploy
-dokku plugins-install
-```
-
-#### Create a new app on Dokku host
-```shell
-app="wpstack"
-dokku create $app
-dokku mariadb:create $app 
-dokku mariadb:link $app $app
-cat /var/ssl/server.crt | dokku ssl:certificate $app
-cat /var/ssl/server.key | dokku ssl:key $app
-dokku config:set $app \
-  WP_DOMAIN=example.com \
-  WP_SSL=true \
-  WP_USER=username \
-  WP_PASS=password \
-  WP_MAIL=user@example.com
-```
-
-#### Clone the repo locally
-```shell
-git clone https://github.com/tropicloud/wp-stack.git
-```
-
-#### Add the Dokku remote locally
 ```shell
 cd wp-stack
 git remote add dokku@example.com:wpstack
