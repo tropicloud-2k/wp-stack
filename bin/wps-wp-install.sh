@@ -1,4 +1,4 @@
-function wps_setup() {
+function wps_wp_install() {
 
 	if [[  $WP_SSL == "true"  ]];
 	then WP_URL="https://${WP_DOMAIN}";
