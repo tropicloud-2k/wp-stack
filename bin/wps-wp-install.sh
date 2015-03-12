@@ -70,7 +70,8 @@ PHP
 	# Ninja Firewall
 	# ------------------------
 	
-	cat $wps/conf/nginx/htninja > /app/.htninja
+	cat $wps/conf/ninjafirewall/htninja > /app/.htninja
+	cat $wps/conf/ninjafirewall/user.ini > /app/wp/.user.ini
 	wp --allow-root plugin install ninjafirewall --activate
 	
 	# ------------------------
