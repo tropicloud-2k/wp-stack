@@ -1,5 +1,4 @@
 function wps_setup() {
-
 	
 	chmod +x /usr/local/wps/wp-stack
 	ln -s /usr/local/wps/wp-stack /usr/local/bin/wps
