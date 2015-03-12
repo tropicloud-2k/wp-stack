@@ -67,6 +67,16 @@ PHP
 	wp --allow-root post meta update 2 header_image "//s3.tropicloud.net/wps-cli/img/slide-vantagens.jpg"
 		
 	# ------------------------
+	# Install WP plugins
+	# ------------------------
+	
+	wp --allow-root plugin delete hello
+	wp --allow-root plugin install jetpack --activate
+	wp --allow-root plugin install disable-xml-rpc --activate
+	wp --allow-root plugin install limit-login-attempts --activate
+	wp --allow-root plugin install wordpress-seo
+	
+	# ------------------------
 	# Ninja Firewall
 	# ------------------------
 	
