@@ -44,18 +44,18 @@ PHP
  	   --admin_email=$WP_MAIL \
  	   --admin_password=$WP_PASS
  	   
-# 	cat > /app/wp-config.php <<'EOF'
-# <?php
-# $database_url = parse_url(file_get_contents('/etc/env/DATABASE_URL'));
-# EOF
-# 
-#  	cat wp-config.php \
-#  	| sed "s|<?php||g" \
-#  	| sed "s|define('DB_NAME'.*|define('DB_NAME', trim(\$database_url['path'],'/'));|g" \
-#  	| sed "s|define('DB_USER'.*|define('DB_USER', \$database_url['user']);|g" \
-#  	| sed "s|define('DB_PASSWORD'.*|define('DB_PASSWORD', \$database_url['pass']);|g" \
-#  	| sed "s|define('DB_HOST'.*|define('DB_HOST', \$database_url['host'].':'.\$database_url['port']);|g" \
-#  	>> /app/wp-config.php && rm -f wp-config.php
+	#  	cat > /app/wp-config.php <<'EOF'
+	#  	<?php
+	#  	$database_url = parse_url(file_get_contents('/etc/env/DATABASE_URL'));
+	#  	EOF
+	# 
+	#  	cat wp-config.php \
+	#  	| sed "s|<?php||g" \
+	#  	| sed "s|define('DB_NAME'.*|define('DB_NAME', trim(\$database_url['path'],'/'));|g" \
+	#  	| sed "s|define('DB_USER'.*|define('DB_USER', \$database_url['user']);|g" \
+	#  	| sed "s|define('DB_PASSWORD'.*|define('DB_PASSWORD', \$database_url['pass']);|g" \
+	#  	| sed "s|define('DB_HOST'.*|define('DB_HOST', \$database_url['host'].':'.\$database_url['port']);|g" \
+	#  	>> /app/wp-config.php && rm -f wp-config.php
 
 	mv wp-config.php ../
 
@@ -82,8 +82,7 @@ PHP
 	# Ninja Firewall
 	# ------------------------
 	
-	cat $wps/conf/ninjafirewall/htninja > /app/.htninja
-# 	cat $wps/conf/ninjafirewall/user.ini > /app/wp/.user.ini
+	cat $wps/conf/ninjafirewall/htninja > $home/.htninja
 	wp --allow-root plugin install ninjafirewall --activate
 	
 	# ------------------------
