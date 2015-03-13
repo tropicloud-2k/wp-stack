@@ -10,5 +10,6 @@ function wps_setup() {
 	
 	cat $wps/conf/nginx/wpsecure.conf     > /etc/nginx/wpsecure.conf
 	cat $wps/conf/nginx/wpsupercache.conf > /etc/nginx/wpsupercache.conf
+	cat $wps/conf/nginx/wordpress.conf    > /etc/nginx/conf.d/default.conf
 	
 }
