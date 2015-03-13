@@ -9,7 +9,7 @@ function wps_wp_install() {
 	# SSL CERT.
 	# ------------------------
 
-	cd /app/ssl
+	cd $home/ssl
 	
 	cat $wps/conf/nginx/openssl.conf | sed "s/localhost/$WP_DOMAIN/g" > openssl.conf
 	openssl req -nodes -sha256 -newkey rsa:2048 -keyout app.key -out app.csr -config openssl.conf -batch
@@ -21,7 +21,7 @@ function wps_wp_install() {
 	# WP INSTALL
 	# ------------------------
 
-	cd /app/wp
+	cd $home/wp
 
 	wp --allow-root core download
 	wp --allow-root core config \
@@ -81,15 +81,15 @@ PHP
 	# ------------------------
 	
 	cat $wps/conf/ninjafirewall/htninja > /app/.htninja
-	cat $wps/conf/ninjafirewall/user.ini > /app/wp/.user.ini
+# 	cat $wps/conf/ninjafirewall/user.ini > /app/wp/.user.ini
 	wp --allow-root plugin install ninjafirewall --activate
 	
 	# ------------------------
 	# FIX PERMISSIONS
 	# ------------------------
 
-	chown nginx:nginx -R /app/wp && chmod 755 -R /app/wp
-	chown nginx:nginx /app/wp-config.php && chmod 750 -R /app/wp-config.php
+	chown wpstack:nginx -R $home/wp && chmod 755 -R $home/wp
+	chown wpstack:nginx $home/wp-config.php && chmod 750 -R $home/wp-config.php
 
 	# ------------------------
 	# WELCOME EMAIL
