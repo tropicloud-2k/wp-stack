@@ -11,7 +11,9 @@ function wps_setup() {
 	chown root:root $home
 	chmod 755 $home
 	
-	chown wpstack:nginx /var/log/nginx
+	mkdir -p $home/log
+	
+	chown wpstack:nginx /var/cache/nginx
 	chown wpstack:nginx /var/log/php-fpm
 	
 	# ------------------------
