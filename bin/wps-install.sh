@@ -90,8 +90,8 @@ PHP
 	# FIX PERMISSIONS
 	# ------------------------
 
-	chown wpstack:nginx -R $home/wp && chmod 755 -R $home/wp
-	chown wpstack:nginx $home/wp-config.php && chmod 750 -R $home/wp-config.php
+	chown wpstack:nginx -R $home/*
+	chmod 770 -R $home/*
 
 	# ------------------------
 	# WELCOME EMAIL
