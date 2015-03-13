@@ -5,5 +5,4 @@ ADD . /usr/local/wps
 RUN /bin/bash /usr/local/wps/wp-stack setup
 
 EXPOSE 80 443
-ENTRYPOINT ["wps"]
-CMD ["start"]
+CMD ["wps","start"]

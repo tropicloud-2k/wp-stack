@@ -32,7 +32,7 @@ function wps_install() {
 	   --dbpass=${DB_PASS} \
 	   --dbhost=${DB_HOST}:${DB_PORT} \
 	   --extra-php <<PHP
-define('WPCACHEHOME', '/app/wp/wp-content/plugins/wp-super-cache/');
+define('WPCACHEHOME', '/var/wps/wp/wp-content/plugins/wp-super-cache/');
 define('DISALLOW_FILE_EDIT', true);
 define('WP_CACHE', true);
 PHP

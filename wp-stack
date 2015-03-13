@@ -16,10 +16,10 @@ wps='/usr/local/wps' && home='/var/wps'
 for f in $wps/bin/*.sh; do . $f; done
 
   if [[  $1 == 'setup'  ]];   then wps_setup
+elif [[  $1 == 'login'  ]];   then wps_login
 elif [[  $1 == 'start'  ]];   then wps_start $@
 elif [[  $1 == 'stop'  ]];    then wps_stop $@
 elif [[  $1 == 'restart'  ]]; then wps_restart $@
-elif [[  $1 == 'login'  ]];   then wps_login $@
 
 # ------------------------
 # WP-STACK Commands
