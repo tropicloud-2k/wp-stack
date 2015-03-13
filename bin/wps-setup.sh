@@ -8,9 +8,7 @@ function wps_setup() {
 	mkdir -p $home/wp
 	mkdir -p $home/ssl
 	
-	cat $wps/conf/nginx/wordpress.conf    > /etc/nginx/conf.d/default.conf
 	cat $wps/conf/nginx/wpsecure.conf     > /etc/nginx/wpsecure.conf
 	cat $wps/conf/nginx/wpsupercache.conf > /etc/nginx/wpsupercache.conf
-	cat $wps/conf/html/index.html         > $home/wp/index.html
 	
 }

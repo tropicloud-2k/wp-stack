@@ -98,5 +98,12 @@ PHP
 	# ------------------------
 	
 	$wps/bin/wps-mail welcome -d $WP_URL -u $WP_USER -p $WP_PASS -m $WP_MAIL
+	
+	# ------------------------
+	# RESTART
+	# ------------------------
+	
+	cat $wps/conf/nginx/wordpress.conf > /etc/nginx/conf.d/default.conf
+	/usr/bin/supervisorctl restart nginx
 
 }
