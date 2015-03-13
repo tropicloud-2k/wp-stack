@@ -13,7 +13,7 @@ function wps_wp_install() {
 	# SSL CERT.
 	# ------------------------
 
-	mkdir -p $home/ssl && cd $home/ssl
+	cd $home/ssl
 	
 	cat $wps/conf/nginx/openssl.conf | sed "s/localhost/$WP_DOMAIN/g" > openssl.conf
 	openssl req -nodes -sha256 -newkey rsa:2048 -keyout app.key -out app.csr -config openssl.conf -batch
@@ -25,7 +25,7 @@ function wps_wp_install() {
 	# WP INSTALL
 	# ------------------------
 
-	mkdir -p $home/wp && cd $home/wp
+	cd $home/wp
 
 	wp --allow-root core download
 	wp --allow-root core config \
@@ -34,7 +34,7 @@ function wps_wp_install() {
 	   --dbpass=${DB_PASS} \
 	   --dbhost=${DB_HOST}:${DB_PORT} \
 	   --extra-php <<PHP
-define('WPCACHEHOME', '$home/wpstack/wp/wp-content/plugins/wp-super-cache/');
+define('WPCACHEHOME', '/app/wps/wp/wp-content/plugins/wp-super-cache/');
 define('DISALLOW_FILE_EDIT', true);
 define('WP_CACHE', true);
 PHP
@@ -85,16 +85,19 @@ PHP
 	# ------------------------
 	
 	cat $wps/conf/ninjafirewall/htninja > /app/.htninja
-	cat $wps/conf/ninjafirewall/user.ini > $home/wp/.user.ini
+# 	cat $wps/conf/ninjafirewall/user.ini > $home/wp/.user.ini
 	wp --allow-root plugin install ninjafirewall --activate
 	
 	# ------------------------
 	# FIX PERMISSIONS
 	# ------------------------
 
-	chown wpstack:nginx -R $home/wp && chmod 755 -R $home/wp
-	chown wpstack:nginx $home/wp-config.php && chmod 750 -R $home/wp-config.php
-
+	chown wpstack:nginx -R $home/wp
+	chown wpstack:nginx $home/wp-config.php 
+	
+	chmod 770 -R $home/wp
+	chmod 770 -R $home/wp-config.php
+	
 	# ------------------------
 	# WELCOME EMAIL
 	# ------------------------
