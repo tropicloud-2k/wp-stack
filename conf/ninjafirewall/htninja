@@ -1,7 +1,7 @@
 <?php
 
 // WP config file
-$wp_config = '/app/wp-config.php';
+$wp_config = '/var/wps/wp-config.php';
 
 
 // Cloudflare CDN

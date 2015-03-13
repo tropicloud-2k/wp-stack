@@ -33,11 +33,14 @@ function wps_restart() {
 
 	wps_environment
 
-	if [[  -z $2  ]];
-	then /usr/bin/supervisorctl restart all;
-	else /usr/bin/supervisorctl restart $2;
-	fi
+	if [[  -f /tmp/supervisord.pid  ]]; then
 	
+		if [[  -z $2  ]];
+		then /usr/bin/supervisorctl restart all;
+		else /usr/bin/supervisorctl restart $2;
+		fi
+	
+	fi
 }
 
 # ------------------------
@@ -46,9 +49,12 @@ function wps_restart() {
 
 function wps_stop() {
 
-	if [[  -z $2  ]];
-	then /usr/bin/supervisorctl stop all;
-	else /usr/bin/supervisorctl stop $2;
-	fi
+	if [[  -f /tmp/supervisord.pid  ]]; then
 	
+		if [[  -z $2  ]];
+		then /usr/bin/supervisorctl stop all;
+		else /usr/bin/supervisorctl stop $2;
+		fi
+	
+	fi
 }
