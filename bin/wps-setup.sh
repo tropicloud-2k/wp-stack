@@ -11,7 +11,8 @@ function wps_setup() {
 	# ------------------------
 	
 	useradd -g nginx -d $home -s /bin/false wpstack
-	chown root:root $home && chmod 750 $home
+	chown root:root $home
+	chmod 750 $home
 	
 	mkdir -p $home/log
 	mkdir -p $home/ssl
@@ -35,10 +36,12 @@ function wps_setup() {
 	# ------------------------
 
 	chown -R wpstack:nginx $home/wp
+	chown -R wpstack:nginx $home/log
 	chown -R wpstack:nginx /var/log/
 	chown -R wpstack:nginx /var/cache/
 
 	chmod 770 -R $home/wp
+	chmod 770 -R $home/log
 	chmod 770 -R /var/log/
 	chmod 770 -R /var/cache/
 	
