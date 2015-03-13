@@ -60,6 +60,13 @@ PHP
 	mv wp-config.php ../
 
 	# ------------------------
+	# Ninja Firewall
+	# ------------------------
+	
+	cat $wps/conf/ninjafirewall/htninja > $home/.htninja
+	wp --allow-root plugin install ninjafirewall --activate 
+	
+	# ------------------------
 	# WP THEME
 	# ------------------------
 	
@@ -97,13 +104,6 @@ PHP
 	wp --allow-root plugin install wp-super-cache
 	wp --allow-root plugin activate wp-super-cache
 
-	# ------------------------
-	# Ninja Firewall
-	# ------------------------
-	
-	cat $wps/conf/ninjafirewall/htninja > $home/.htninja
-	wp --allow-root plugin install ninjafirewall --activate 
-	
 	# ------------------------
 	# FIX PERMISSIONS
 	# ------------------------
