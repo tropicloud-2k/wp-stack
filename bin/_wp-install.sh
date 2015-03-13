@@ -1,5 +1,7 @@
 function wps_wp_install() {
 
+	source /etc/environment
+
 	if [[  $WP_SSL == "true"  ]];
 	then WP_URL="https://${WP_DOMAIN}";
 	else WP_URL="http://${WP_DOMAIN}";

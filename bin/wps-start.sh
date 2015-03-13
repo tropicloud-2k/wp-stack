@@ -15,8 +15,8 @@ function wps_start() {
 		
 	else
 	
-		if [[  ! -f "$home/log/php-fpm.log"  ]]; then touch /var/log/php-fpm.log; fi
-		if [[  ! -f "$home/log/nginx.log"  ]]; then touch /var/log/nginx.log; fi
+		if [[  ! -f "/var/log/php-fpm.log"  ]]; then touch /var/log/php-fpm.log; fi
+		if [[  ! -f "/var/log/nginx.log"  ]]; then touch /var/log/nginx.log; fi
 		
 		exec /usr/bin/supervisord -n -c /etc/supervisord.conf
 	

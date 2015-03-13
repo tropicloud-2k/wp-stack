@@ -7,7 +7,6 @@ function wps_setup() {
 	
 	mkdir -p $home/wp
 	mkdir -p $home/ssl
-	mkdir -p $home/log
 	
 	cat $wps/conf/nginx/wordpress.conf    > /etc/nginx/conf.d/default.conf
 	cat $wps/conf/nginx/wpsecure.conf     > /etc/nginx/wpsecure.conf
