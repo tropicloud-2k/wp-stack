@@ -34,7 +34,7 @@ function wps_setup() {
 	# Permissions
 	# ------------------------
 
-	chown -R wpstack:nginx $home/wp  && chmod 770 -R $home/wp
-	chown -R wpstack:nginx $home/log && chmod 770 -R $home/log
+	chown -R wpstack:nginx $home/wp  && chmod 750 -R $home/wp
+	chown -R wpstack:nginx $home/log && chmod 750 -R $home/log
 	
 }

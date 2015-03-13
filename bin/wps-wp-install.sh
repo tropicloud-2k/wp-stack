@@ -95,8 +95,8 @@ PHP
 	chown wpstack:nginx -R $home/wp
 	chown wpstack:nginx $home/wp-config.php 
 	
-	chmod 770 -R $home/wp
-	chmod 770 -R $home/wp-config.php
+	chmod 750 -R $home/wp
+	chmod 750 -R $home/wp-config.php
 	
 	# ------------------------
 	# WELCOME EMAIL
