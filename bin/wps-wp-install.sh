@@ -1,5 +1,9 @@
 function wps_wp_install() {
 
+	# ------------------------
+	# ENV.
+	# ------------------------
+
 	if [[  $WP_SSL == "true"  ]];
 	then WP_URL="https://${WP_DOMAIN}";
 	else WP_URL="http://${WP_DOMAIN}";
@@ -9,7 +13,7 @@ function wps_wp_install() {
 	# SSL CERT.
 	# ------------------------
 
-	cd /app/ssl
+	mkdir -p $home/ssl && cd $home/ssl
 	
 	cat $wps/conf/nginx/openssl.conf | sed "s/localhost/$WP_DOMAIN/g" > openssl.conf
 	openssl req -nodes -sha256 -newkey rsa:2048 -keyout app.key -out app.csr -config openssl.conf -batch
@@ -21,7 +25,7 @@ function wps_wp_install() {
 	# WP INSTALL
 	# ------------------------
 
-	cd /app/wp
+	mkdir -p $home/wp && cd $home/wp
 
 	wp --allow-root core download
 	wp --allow-root core config \
@@ -30,7 +34,7 @@ function wps_wp_install() {
 	   --dbpass=${DB_PASS} \
 	   --dbhost=${DB_HOST}:${DB_PORT} \
 	   --extra-php <<PHP
-define('WPCACHEHOME', '/app/wp/wp-content/plugins/wp-super-cache/');
+define('WPCACHEHOME', '$home/wpstack/wp/wp-content/plugins/wp-super-cache/');
 define('DISALLOW_FILE_EDIT', true);
 define('WP_CACHE', true);
 PHP
@@ -42,20 +46,20 @@ PHP
  	   --admin_email=$WP_MAIL \
  	   --admin_password=$WP_PASS
  	   
-# 	cat > /app/wp-config.php <<'EOF'
-# <?php
-# $database_url = parse_url(file_get_contents('/etc/env/DATABASE_URL'));
-# EOF
-# 
-#  	cat wp-config.php \
-#  	| sed "s|<?php||g" \
-#  	| sed "s|define('DB_NAME'.*|define('DB_NAME', trim(\$database_url['path'],'/'));|g" \
-#  	| sed "s|define('DB_USER'.*|define('DB_USER', \$database_url['user']);|g" \
-#  	| sed "s|define('DB_PASSWORD'.*|define('DB_PASSWORD', \$database_url['pass']);|g" \
-#  	| sed "s|define('DB_HOST'.*|define('DB_HOST', \$database_url['host'].':'.\$database_url['port']);|g" \
-#  	>> /app/wp-config.php && rm -f wp-config.php
-
 	mv wp-config.php ../
+
+	# cat > $home/wp-config.php <<'EOF'
+	# <?php
+	# $database_url = parse_url(file_get_contents('/etc/env/DATABASE_URL'));
+	# EOF
+	# 
+	# cat wp-config.php \
+	# | sed "s|<?php||g" \
+	# | sed "s|define('DB_NAME'.*|define('DB_NAME', trim(\$database_url['path'],'/'));|g" \
+	# | sed "s|define('DB_USER'.*|define('DB_USER', \$database_url['user']);|g" \
+	# | sed "s|define('DB_PASSWORD'.*|define('DB_PASSWORD', \$database_url['pass']);|g" \
+	# | sed "s|define('DB_HOST'.*|define('DB_HOST', \$database_url['host'].':'.\$database_url['port']);|g" \
+	# >> $home/wp-config.php && rm -f wp-config.php
 
 	# ------------------------
 	# WP THEME
@@ -81,15 +85,15 @@ PHP
 	# ------------------------
 	
 	cat $wps/conf/ninjafirewall/htninja > /app/.htninja
-	cat $wps/conf/ninjafirewall/user.ini > /app/wp/.user.ini
+	cat $wps/conf/ninjafirewall/user.ini > $home/wp/.user.ini
 	wp --allow-root plugin install ninjafirewall --activate
 	
 	# ------------------------
 	# FIX PERMISSIONS
 	# ------------------------
 
-	chown nginx:nginx -R /app/wp && chmod 755 -R /app/wp
-	chown nginx:nginx /app/wp-config.php && chmod 750 -R /app/wp-config.php
+	chown wpstack:nginx -R $home/wp && chmod 755 -R $home/wp
+	chown wpstack:nginx $home/wp-config.php && chmod 750 -R $home/wp-config.php
 
 	# ------------------------
 	# WELCOME EMAIL

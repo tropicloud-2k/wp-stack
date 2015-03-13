@@ -7,7 +7,7 @@
 # version: 0.2
 # ------------------------
 
-wps='/usr/local/wps'
+wps='/usr/local/wps' && home='/app/wpstack'
 
 # ------------------------
 # WP-STACK Functions
