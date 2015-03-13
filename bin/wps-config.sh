@@ -1,6 +1,10 @@
 function wps_config() {
 
-	rm -f $home/wp-config.php
+	mv $home/wp-config.php $home/wp-config.bkp
+
+	# ------------------------
+	# WP CONFIG
+	# ------------------------
 
 	cd $home/wp
 	
@@ -17,10 +21,11 @@ PHP
 
 	mv wp-config.php ../
 
-	chown wpstack:nginx -R $home
-	chmod 775 -R $home
-	
-	chown wpstack:nginx $home/wp-config.php
-	chmod 770 -R $home/wp-config.php
+	# ------------------------
+	# FIX PERMISSIONS
+	# ------------------------
+
+	chown wpstack:nginx -R $home && chmod 770 -R $home
+	chown wpstack:nginx -R $home/wp && chmod 775 -R $home/wp
 
 }
