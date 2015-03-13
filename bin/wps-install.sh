@@ -72,7 +72,8 @@ PHP
 	# Install WP plugins
 	# ------------------------
 	
-	wp --allow-root plugin delete hello
+	wp --allow-root plugin delete hello 
+	wp --allow-root plugin activate akismet
 	wp --allow-root plugin install jetpack --activate
 	wp --allow-root plugin install disable-xml-rpc --activate
 	wp --allow-root plugin install limit-login-attempts --activate
@@ -83,7 +84,7 @@ PHP
 	# ------------------------
 	
 	cat $wps/conf/ninjafirewall/htninja > $home/.htninja
-	wp --allow-root plugin install ninjafirewall --activate
+	wp --allow-root plugin install ninjafirewall --activate --quiet
 	
 	# ------------------------
 	# FIX PERMISSIONS
