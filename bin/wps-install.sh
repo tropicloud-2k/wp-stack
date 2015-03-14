@@ -1,6 +1,9 @@
 function wps_install() {
 
 	source /etc/environment
+	
+	echo -ne "\033[0;34m  Client Email: \033[1;37m"
+	read WP_MAIL
 
 	if [[  $WP_SSL == "true"  ]];
 	then WP_URL="https://${WP_DOMAIN}";
@@ -24,7 +27,7 @@ function wps_install() {
 	# ------------------------
 
 	cd $home/wp
-
+	
 	wp --allow-root core download
 	wp --allow-root core config \
 	   --dbname=${DB_NAME} \
@@ -59,13 +62,6 @@ PHP
 
 	mv wp-config.php ../
 
-	# ------------------------
-	# Ninja Firewall
-	# ------------------------
-	
-	cat $wps/conf/ninjafirewall/htninja > $home/.htninja
-	wp --allow-root plugin install ninjafirewall --activate 
-	
 	# ------------------------
 	# WP THEME
 	# ------------------------
@@ -105,8 +101,17 @@ PHP
 	wp --allow-root plugin activate wp-super-cache
 
 	# ------------------------
+	# Ninja Firewall
+	# ------------------------
+	
+	cat $wps/conf/ninjafirewall/htninja > $home/.htninja
+	wp --allow-root plugin install ninjafirewall --activate 
+	
+	# ------------------------
 	# FIX PERMISSIONS
 	# ------------------------
+
+	touch .htaccess
 
 	chown wpstack:nginx -R $home && chmod 755 -R $home
 	chown wpstack:nginx -R $home/wp && chmod 775 -R $home/wp
