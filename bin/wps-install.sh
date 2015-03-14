@@ -69,7 +69,7 @@ PHP
 	wp --allow-root post meta update 2 header_image "//s3.tropicloud.net/wps-cli/img/slide-vantagens.jpg"
 		
 	# ------------------------
-	# General plugins
+	# WP PLUGINS
 	# ------------------------
 	
 	wp --allow-root plugin activate akismet
@@ -80,7 +80,7 @@ PHP
 	wp --allow-root plugin install limit-login-attempts --activate
 	
 	# ------------------------
-	# Autoptimize
+	# AUTOOPTIMIZE
 	# ------------------------
 	
 	wp --allow-root plugin install autoptimize  --activate
@@ -91,21 +91,38 @@ PHP
 	wp --allow-root option update autoptimize_css_datauris 'on'
 	
 	# ------------------------
-	# WP Super Cache
-	# ------------------------
-	
-	wp --allow-root plugin install wp-super-cache
-	wp --allow-root plugin activate wp-super-cache
+  	# WP SUPER CACHE
+  	# ------------------------
+  	
+  	wp --allow-root plugin install wp-super-cache
+	WPCACHEHOME="${home}/wp/wp-content/plugins/wp-super-cache"
+	cat > ${home}/wp/wp-content/wp-cache-config.php <<'EOF'
+<?php
+$wp_cache_front_page_checks = 1; //Added by WP-Stack
+$wp_cache_no_cache_for_get = 1; //Added by WP-Stack
+$cache_schedule_interval = 'daily'; //Added by WP-Stack
+$cache_time_interval = '21600'; //Added by WP-Stack
+$cache_scheduled_time = '04:00'; //Added by WP-Stack
+$cache_schedule_type = 'time'; //Added by WP-Stack
+$wp_cache_slash_check = 1; //Added by WP-Stack
+$wp_cache_mod_rewrite = 1; //Added by WP-Stack
+EOF
+	cat ${WPCACHEHOME}/wp-cache-config-sample.php | sed 's/<?php//g' >> ${home}/wp/wp-content/wp-cache-config.php	
+# 	sed -i 's|cache_enabled = false|cache_enabled = true|g' ${home}/wp/wp-content/wp-cache-config.php
+	sed -i 's|cache_compression = 0|cache_compression = 1|g' ${home}/wp/wp-content/wp-cache-config.php
+	sed -i 's|cache_max_time = 3600|cache_max_time = 86400|g' ${home}/wp/wp-content/wp-cache-config.php
+	cat ${WPCACHEHOME}/advanced-cache.php > ${home}/wp/wp-content/advanced-cache.php
+  	wp --allow-root plugin activate wp-super-cache
 
 	# ------------------------
-	# Ninja Firewall
+	# NINJA FIREWALL
 	# ------------------------
 	
 	cat $wps/conf/ninjafirewall/htninja > $home/.htninja
 	wp --allow-root plugin install ninjafirewall --activate 
 	
 	# ------------------------
-	# FIX PERMISSIONS
+	# PERMISSIONS
 	# ------------------------
 
 	touch .htaccess
