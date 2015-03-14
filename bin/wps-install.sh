@@ -2,9 +2,6 @@ function wps_install() {
 
 	source /etc/environment
 	
-	echo -ne "\033[0;34m  Client Email: \033[1;37m"
-	read WP_MAIL
-
 	if [[  $WP_SSL == "true"  ]];
 	then WP_URL="https://${WP_DOMAIN}";
 	else WP_URL="http://${WP_DOMAIN}";
