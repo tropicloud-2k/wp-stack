@@ -108,7 +108,7 @@ $wp_cache_slash_check = 1; //Added by WP-Stack
 $wp_cache_mod_rewrite = 1; //Added by WP-Stack
 EOF
 	cat ${WPCACHEHOME}/wp-cache-config-sample.php | sed 's/<?php//g' >> ${home}/wp/wp-content/wp-cache-config.php	
-# 	sed -i 's|cache_enabled = false|cache_enabled = true|g' ${home}/wp/wp-content/wp-cache-config.php
+ 	sed -i 's|cache_enabled = false|cache_enabled = true|g' ${home}/wp/wp-content/wp-cache-config.php
 	sed -i 's|cache_compression = 0|cache_compression = 1|g' ${home}/wp/wp-content/wp-cache-config.php
 	sed -i 's|cache_max_time = 3600|cache_max_time = 86400|g' ${home}/wp/wp-content/wp-cache-config.php
 	cat ${WPCACHEHOME}/advanced-cache.php > ${home}/wp/wp-content/advanced-cache.php
